@@ -118,6 +118,47 @@ Apache License 2.0. See headers and forthcoming `LICENSE` file if distributing e
 ### Automated Release (Tag-Based)
 Push an annotated tag `vX.Y.Z` and CI will build & attach the fat JAR as artifact. Optional extended release automation can be added if needed.
 
+## Publishing / Releasing
+Two approaches:
+
+### 1. Manual (First Time)
+```bash
+git remote add origin git@github.com:YOUR_ORG/knox-token-utility.git
+git push -u origin main
+git tag -a v1.0.0 -m "Release 1.0.0"
+git push origin v1.0.0
+```
+This triggers the tag workflow and produces a GitHub Release with artifacts.
+
+### 2. Automated Version Bump Script
+Use the helper script to bump version, tag, and push:
+```bash
+./scripts/release.sh 1.0.1
+```
+Flags:
+- `--dry-run` show actions only
+- `--no-push` create commit+tag locally without pushing
+- `--sign` GPG-sign annotated tag (requires configured GPG)
+- `--main-branch=branchName` if not `main`
+
+Example signed release:
+```bash
+./scripts/release.sh 1.1.0 --sign
+```
+
+### After Tag Push
+- CI builds & uploads fat JAR
+- Release workflow attaches artifacts & checksums
+- (Optional) Coverage re-upload updates badge
+
+### Preparing Next Development Iteration
+After releasing 1.0.1 you may set a snapshot:
+```bash
+mvn versions:set -DnewVersion=1.0.2-SNAPSHOT -DgenerateBackupPoms=false
+git commit -am "chore: start 1.0.2-SNAPSHOT"
+git push origin main
+```
+
 ## Maintenance: Low Disk Advanced Strategies
 
 If coverage reports still fail due to space:
