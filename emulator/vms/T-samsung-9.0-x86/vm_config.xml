@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<EmulatorConfiguration xmlns="http://www.tizen.org/em">
+    <baseInformation>
+        <name>T-samsung-9.0-x86</name>
+        <architecture>x86</architecture>
+        <platform>tv-samsung-9.0-x86</platform>
+        <deviceTemplate name="HD1080 TV" version="1.0">
+            <path>/Users/tareq/tizen-studio/platforms/tizen-9.0/tv-samsung/emulator-resources/devices/HD1080-TV.xml</path>
+        </deviceTemplate>
+        <diskImage profile="tv" type="standard" version="9.0">
+            <diskImageFile format="qcow2" type="child">/Users/tareq/tizen-studio-data/emulator/vms/T-samsung-9.0-x86/emulimg-T-samsung-9.0-x86.x86</diskImageFile>
+            <diskImageFile format="qcow2" type="base" version="9.0.7">/Users/tareq/tizen-studio/platforms/tizen-9.0/tv-samsung/emulator-images/tv-samsung-9.0-x86/emulimg-9.0.x86</diskImageFile>
+            <diskImageFile format="qcow2" type="swap">/Users/tareq/tizen-studio-data/emulator/vms/T-samsung-9.0-x86/swap-T-samsung-9.0-x86.img</diskImageFile>
+        </diskImage>
+    </baseInformation>
+    <usability>
+        <logging>
+            <level>NONE</level>
+        </logging>
+        <fileSharing/>
+        <hwVirtualization>false</hwVirtualization>
+        <hwGLAcceleration>true</hwGLAcceleration>
+        <SupportSuspend>false</SupportSuspend>
+    </usability>
+    <device>
+        <display>
+            <resolution>
+                <width>1920</width>
+                <height>1080</height>
+            </resolution>
+            <density unit="dpi">69</density>
+            <screenSize unit="inch" value="32.0"/>
+            <skinPath>
+                <path>/Users/tareq/tizen-studio/platforms/tizen-9.0/tv-samsung/emulator-resources/skins/tv-1920x1080</path>
+            </skinPath>
+        </display>
+        <CPU>
+            <value unit="cpu">4</value>
+        </CPU>
+        <RAM>
+            <size unit="MiB">1024</size>
+        </RAM>
+        <touch maxTouchPoint="10"/>
+    </device>
+    <oci>
+        <ociOptions>None</ociOptions>
+    </oci>
+    <advancedOption>
+        <option name="tuner">
+            <subOption name="system" value="ATSC"/>
+            <subOption name="country" value="USA"/>
+            <subOption name="tunerFilePath" value=""/>
+            <subOption name="tunerFileName" value="tuner_default.cfg"/>
+        </option>
+        <option name="displayMode">
+            <subOption name="qtEnable" value="on"/>
+        </option>
+        <option name="glVersion" value="v2.0_v3.0"/>
+        <option name="netIpInfo">
+            <subOption name="useDHCP" value="off"/>
+            <subOption name="ipAddr" value=""/>
+            <subOption name="subnet" value=""/>
+            <subOption name="gateway" value=""/>
+        </option>
+        <option name="proxy">
+            <subOption name="proxyMode" value="auto"/>
+            <subOption name="httpProxy" value=""/>
+            <subOption name="httpsProxy" value=""/>
+            <subOption name="ftpProxy" value=""/>
+            <subOption name="socksProxy" value=""/>
+        </option>
+        <option name="netConnectType" value="NAT"/>
+        <option name="netTapDevice" value=""/>
+        <option name="netDns" value=""/>
+        <option name="netMac" value=""/>
+    </advancedOption>
+</EmulatorConfiguration>

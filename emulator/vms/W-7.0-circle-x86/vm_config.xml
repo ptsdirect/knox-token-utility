@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<EmulatorConfiguration xmlns="http://www.tizen.org/em">
+    <baseInformation>
+        <name>W-7.0-circle-x86</name>
+        <architecture>x86</architecture>
+        <platform>wearable-7.0-circle-x86</platform>
+        <deviceTemplate name="Wearable Circle" version="1.0">
+            <path>/Users/tareq/tizen-studio/platforms/common/wearable/emulator-resources/devices/360-Wearable-Circle.xml</path>
+        </deviceTemplate>
+        <diskImage profile="wearable" type="standard" version="7.0">
+            <diskImageFile format="qcow2" type="child">/Users/tareq/tizen-studio-data/emulator/vms/W-7.0-circle-x86/emulimg-W-7.0-circle-x86.x86</diskImageFile>
+            <diskImageFile format="qcow2" type="base" version="0.0.179">/Users/tareq/tizen-studio/platforms/tizen-7.0/wearable/emulator-images/wearable-7.0-circle-x86/emulimg-7.0.x86</diskImageFile>
+            <diskImageFile format="qcow2" type="swap">/Users/tareq/tizen-studio-data/emulator/vms/W-7.0-circle-x86/swap-W-7.0-circle-x86.img</diskImageFile>
+        </diskImage>
+    </baseInformation>
+    <usability>
+        <logging>
+            <level>NONE</level>
+        </logging>
+        <fileSharing/>
+        <hwVirtualization>false</hwVirtualization>
+        <hwGLAcceleration>true</hwGLAcceleration>
+        <SupportSuspend>false</SupportSuspend>
+    </usability>
+    <device>
+        <display>
+            <resolution>
+                <width>360</width>
+                <height>360</height>
+            </resolution>
+            <density unit="dpi">301</density>
+            <screenSize unit="inch" value="1.69"/>
+            <skinPath>
+                <path>/Users/tareq/tizen-studio/platforms/common/wearable/emulator-resources/skins/wearableO-360x360-2btn</path>
+            </skinPath>
+        </display>
+        <CPU>
+            <value unit="cpu">4</value>
+        </CPU>
+        <RAM>
+            <size unit="MiB">512</size>
+        </RAM>
+        <touch maxTouchPoint="2"/>
+    </device>
+    <advancedOption>
+        <option name="displayMode">
+            <subOption name="qtEnable" value="on"/>
+        </option>
+        <option name="jack">
+            <subOption name="charger" value="on"/>
+            <subOption name="usb" value="on"/>
+        </option>
+        <option name="sensor">
+            <subOption name="accel" value="on"/>
+            <subOption name="gyro" value="on"/>
+            <subOption name="proxi" value="on"/>
+            <subOption name="geo" value="on"/>
+            <subOption name="light" value="on"/>
+            <subOption name="haptic" value="on"/>
+            <subOption name="press" value="on"/>
+            <subOption name="uv" value="on"/>
+            <subOption name="hrm" value="on"/>
+            <subOption name="pedo" value="on"/>
+        </option>
+        <option name="camera">
+            <subOption name="rear" value="off"/>
+            <subOption name="front" value="off"/>
+            <subOption name="rearType" value="Virtual"/>
+            <subOption name="rearImage" value="/Users/tareq/tizen-studio/tools/emulator/images/default-image2.gif"/>
+        </option>
+        <option name="proxy">
+            <subOption name="proxyMode" value="auto"/>
+            <subOption name="httpProxy" value=""/>
+            <subOption name="httpsProxy" value=""/>
+            <subOption name="ftpProxy" value=""/>
+            <subOption name="socksProxy" value=""/>
+        </option>
+        <option name="netConnectType" value="NAT"/>
+        <option name="netTapDevice" value=""/>
+        <option name="netIpInfo">
+            <subOption name="useDHCP" value="off"/>
+            <subOption name="ipAddr" value=""/>
+            <subOption name="subnet" value=""/>
+            <subOption name="gateway" value=""/>
+        </option>
+        <option name="netDns" value=""/>
+        <option name="netMac" value=""/>
+        <option name="aodColorType" value="None"/>
+        <option name="connectivity">
+            <subOption name="nfc" value="on"/>
+        </option>
+        <option name="glVersion" value="v2.0_v3.0"/>
+    </advancedOption>
+</EmulatorConfiguration>

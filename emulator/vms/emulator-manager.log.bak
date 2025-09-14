@@ -1,0 +1,201 @@
+[2025.9.11 5:49:34.593][INFO][Main.initializeLogger] Start Emulator Manager!!
+[2025.9.11 5:49:34.630][INFO][Overseer.startWork] Overseer [Checkers] is starting...
+[2025.9.11 5:49:34.699][INFO][About.printSystemInformation] System Information
+JAVA HOME: /Users/tareq/tizen-studio/jdk/Contents/Home/jre
+JAVA VENDOR: Amazon.com Inc.
+JAVA VERSION: 1.8.0_322
+OS ARCH: x86_64
+OS NAME: Mac OS X
+OS VERSION: 15.5
+
+[2025.9.11 5:49:34.700][INFO][About.printSystemInformation] EmulatorManager Information
+Version: 6.1
+Build time: 20241224-1828 (GMT)
+Workspace path: /Users/tareq/tizen-studio-data/emulator/vms
+Package version: 2.6.59
+[2025.9.11 5:49:34.701][INFO][HelperClass.runProcess] Try to run external process: [/Users/tareq/tizen-studio/tools/emulator/bin/check-hax]
+[2025.9.11 5:49:34.719][INFO][HelperClass.runProcess]  -- Working dir : /
+[2025.9.11 5:49:34.721][INFO][HelperClass.runProcess] Try to run external process: [/Users/tareq/tizen-studio/tools/emulator/bin/check-cam]
+[2025.9.11 5:49:34.721][INFO][HelperClass.runProcess]  -- Working dir : /
+[2025.9.11 5:49:34.722][INFO][HelperClass.runProcess] Try to run external process: [/Users/tareq/tizen-studio/tools/emulator/bin/check-gl]
+[2025.9.11 5:49:34.722][INFO][HelperClass.runProcess]  -- Working dir : /
+[2025.9.11 5:49:35.319][INFO][CheckVT.work] Support HW virtualization: false
+[2025.9.11 5:49:35.322][INFO][CheckVT.work] non-UG: false
+[2025.9.11 5:49:35.371][INFO][CheckGPU.work] Support GPU: true
+[2025.9.11 5:49:35.371][INFO][CheckGPU.work] Gallium: false
+[2025.9.11 5:49:35.373][WARNING][ProcessOutputReader.run] Stream closed
+[2025.9.11 5:49:36.826][INFO][CheckWebcam.work] Support webcam : false
+[2025.9.11 5:49:36.830][WARNING][ProcessOutputReader.run] Stream closed
+[2025.9.11 5:49:36.833][INFO][Overseer$1.run] Overseer [Checkers] is done...
+[2025.9.11 5:49:44.394][INFO][MacUtil.setDockIcon] JDK 8 and below, set icon using 'com.apple.eawt.Application'
+[2025.9.11 5:49:47.485][WARNING][ProfileList.get] cannot find profile
+[2025.9.11 5:49:47.488][WARNING][ProfileList.get] cannot find profile
+[2025.9.11 5:49:47.492][WARNING][ProfileList.get] cannot find profile
+[2025.9.11 5:49:47.504][WARNING][ProfileList.get] cannot find profile
+[2025.9.11 5:49:47.533][WARNING][StandardPlatformImageValue.createInstance] info.ini file does not exist.
+[2025.9.11 5:49:47.536][WARNING][StandardPlatformImageValue.createInstance] info.ini file does not exist.
+[2025.9.11 5:49:47.537][WARNING][StandardPlatformImageValue.createInstance] info.ini file does not exist.
+[2025.9.11 5:49:47.538][WARNING][StandardPlatformImageValue.createInstance] info.ini file does not exist.
+[2025.9.11 5:49:47.539][WARNING][StandardPlatformImageValue.createInstance] info.ini file does not exist.
+[2025.9.11 5:49:47.540][WARNING][StandardPlatformImageValue.createInstance] info.ini file does not exist.
+[2025.9.11 5:49:47.953][WARNING][SkinList.loadSkins] This skin directory does not exist: /Users/tareq/tizen-studio/platforms/tizen-7.0/wearable/emulator-resources/skins
+[2025.9.11 5:49:48.565][FINE][FXMLVMTableViewController$9$1.run] Change status of property: W-7.0-circle-x86(WELL)
+[2025.9.11 5:49:48.569][INFO][VMWorkerCommon.<init>] called VMWorkerCommon.
+[2025.9.11 5:49:48.569][INFO][VMWorkerCommon.initLauncher] called initLauncher of VMWorkerCommon.
+[2025.9.11 5:49:48.572][FINE][FXMLVMTableViewController$7$1.run] Create property: W-7.0-circle-x86
+[2025.9.11 5:49:48.604][FINE][FXMLVMTableViewController$8$1.run] Change status of property: W-7.0-circle-x86(READY)
+[2025.9.11 5:49:48.757][WARNING][SkinList.loadSkins] This skin directory does not exist: /Users/tareq/tizen-studio/platforms/tizen-8.0/tizen/emulator-resources/skins
+[2025.9.11 5:49:48.760][INFO][VMWorkerCommon.<init>] called VMWorkerCommon.
+[2025.9.11 5:49:48.760][INFO][VMWorkerCommon.initLauncher] called initLauncher of VMWorkerCommon.
+[2025.9.11 5:49:48.848][WARNING][SkinList.loadSkins] This skin directory does not exist: /Users/tareq/tizen-studio/platforms/tizen-6.0/mobile/emulator-resources/skins
+[2025.9.11 5:49:48.850][INFO][VMWorkerCommon.<init>] called VMWorkerCommon.
+[2025.9.11 5:49:48.850][INFO][VMWorkerCommon.initLauncher] called initLauncher of VMWorkerCommon.
+[2025.9.11 5:49:48.995][INFO][TemplateLoader.loadTemplate] /Users/tareq/tizen-studio/platforms/tizen-7.0/wearable/emulator-resources/template/x86-standard-template-v2.xml is loaded for wearable-7.0-circle-x86
+[2025.9.11 5:49:49.242][WARNING][JAXBHelper.parseXMLLocked] Failed to open config file - /Users/tareq/tizen-studio/platforms/tizen-7.0/wearable/emulator-resources/devices/ui/device-template-ui.xml
+[2025.9.11 5:49:49.243][WARNING][TemplateLoader.loadTemplate] Failed to load template - /Users/tareq/tizen-studio/platforms/tizen-7.0/wearable/emulator-resources/devices/ui/device-template-ui.xml
+[2025.9.11 5:49:49.342][FINE][VMStatusCell.updateItem] Update status of item: W-7.0-circle-x86 - READY
+[2025.9.11 5:49:49.385][FINE][VMStatusCell.updateItem] Update status of item: W-7.0-circle-x86 - READY
+[2025.9.11 5:49:49.504][INFO][VMWorkerCommon.<init>] called VMWorkerCommon.
+[2025.9.11 5:49:49.505][INFO][VMWorkerCommon.initLauncher] called initLauncher of VMWorkerCommon.
+[2025.9.11 5:49:49.653][FINE][FXMLVMTableViewController$9$1.run] Change status of property: T-8.0-x86(WELL)
+[2025.9.11 5:49:49.701][FINE][FXMLVMTableViewController$7$1.run] Create property: T-8.0-x86
+[2025.9.11 5:49:49.730][FINE][FXMLVMTableViewController$8$1.run] Change status of property: T-8.0-x86(READY)
+[2025.9.11 5:49:49.740][FINE][FXMLVMTableViewController$9$1.run] Change status of property: M-6.0-x86(WELL)
+[2025.9.11 5:49:49.741][FINE][FXMLVMTableViewController$7$1.run] Create property: M-6.0-x86
+[2025.9.11 5:49:49.743][FINE][FXMLVMTableViewController$8$1.run] Change status of property: M-6.0-x86(READY)
+[2025.9.11 5:49:49.749][FINE][FXMLVMTableViewController$9$1.run] Change status of property: T-samsung-9.0-x86(WELL)
+[2025.9.11 5:49:49.756][FINE][FXMLVMTableViewController$7$1.run] Create property: T-samsung-9.0-x86
+[2025.9.11 5:49:49.759][FINE][FXMLVMTableViewController$8$1.run] Change status of property: T-samsung-9.0-x86(READY)
+[2025.9.11 5:49:49.803][WARNING][SkinList.loadSkins] This skin directory does not exist: /Users/tareq/tizen-studio/platforms/tizen-6.5/mobile/emulator-resources/skins
+[2025.9.11 5:49:49.804][INFO][VMWorkerCommon.<init>] called VMWorkerCommon.
+[2025.9.11 5:49:49.805][INFO][VMWorkerCommon.initLauncher] called initLauncher of VMWorkerCommon.
+[2025.9.11 5:49:49.866][INFO][TemplateLoader.loadTemplate] /Users/tareq/tizen-studio/platforms/tizen-6.0/mobile/emulator-resources/template/x86-standard-template-v2.xml is loaded for mobile-6.0-x86
+[2025.9.11 5:49:49.974][WARNING][SkinList.loadSkins] This skin directory does not exist: /Users/tareq/tizen-studio/platforms/tizen-7.0/mobile/emulator-resources/skins
+[2025.9.11 5:49:49.975][INFO][VMWorkerCommon.<init>] called VMWorkerCommon.
+[2025.9.11 5:49:49.975][INFO][VMWorkerCommon.initLauncher] called initLauncher of VMWorkerCommon.
+[2025.9.11 5:49:49.980][WARNING][JAXBHelper.parseXMLLocked] Failed to open config file - /Users/tareq/tizen-studio/platforms/tizen-6.0/mobile/emulator-resources/devices/ui/device-template-ui.xml
+[2025.9.11 5:49:49.981][WARNING][TemplateLoader.loadTemplate] Failed to load template - /Users/tareq/tizen-studio/platforms/tizen-6.0/mobile/emulator-resources/devices/ui/device-template-ui.xml
+[2025.9.11 5:49:50.17][INFO][VMWorkerCommon.<init>] called VMWorkerCommon.
+[2025.9.11 5:49:50.17][INFO][VMWorkerCommon.initLauncher] called initLauncher of VMWorkerCommon.
+[2025.9.11 5:49:50.52][FINE][VMStatusCell.updateItem] Update status of item: M-6.0-x86 - READY
+[2025.9.11 5:49:50.126][WARNING][SkinList.loadSkins] This skin directory does not exist: /Users/tareq/tizen-studio/platforms/tizen-9.0/tizen/emulator-resources/skins
+[2025.9.11 5:49:50.127][INFO][VMWorkerCommon.<init>] called VMWorkerCommon.
+[2025.9.11 5:49:50.127][INFO][VMWorkerCommon.initLauncher] called initLauncher of VMWorkerCommon.
+[2025.9.11 5:49:50.147][INFO][TemplateLoader.loadTemplate] /Users/tareq/tizen-studio/platforms/tizen-8.0/tizen/emulator-resources/template/x86-standard-template-v2.xml is loaded for tizen-8.0-x86
+[2025.9.11 5:49:50.193][WARNING][SkinList.loadSkins] This skin directory does not exist: /Users/tareq/tizen-studio/platforms/tizen-9.0/tizen/emulator-resources/skins
+[2025.9.11 5:49:50.195][INFO][VMWorkerCommon.<init>] called VMWorkerCommon.
+[2025.9.11 5:49:50.196][INFO][VMWorkerCommon.initLauncher] called initLauncher of VMWorkerCommon.
+[2025.9.11 5:49:50.203][WARNING][JAXBHelper.parseXMLLocked] Failed to open config file - /Users/tareq/tizen-studio/platforms/tizen-8.0/tizen/emulator-resources/devices/ui/device-template-ui.xml
+[2025.9.11 5:49:50.204][WARNING][TemplateLoader.loadTemplate] Failed to load template - /Users/tareq/tizen-studio/platforms/tizen-8.0/tizen/emulator-resources/devices/ui/device-template-ui.xml
+[2025.9.11 5:49:50.252][WARNING][SkinList.loadSkins] This skin directory does not exist: /Users/tareq/tizen-studio/platforms/tizen-8.0/tizen/emulator-resources/skins
+[2025.9.11 5:49:50.253][INFO][VMWorkerCommon.<init>] called VMWorkerCommon.
+[2025.9.11 5:49:50.254][INFO][VMWorkerCommon.initLauncher] called initLauncher of VMWorkerCommon.
+[2025.9.11 5:49:50.265][FINE][VMStatusCell.updateItem] Update status of item: T-8.0-x86 - READY
+[2025.9.11 5:49:50.280][FINE][VMStatusCell.updateItem] Update status of item: W-7.0-circle-x86 - READY
+[2025.9.11 5:49:50.297][INFO][TemplateLoader.loadTemplate] /Users/tareq/tizen-studio/platforms/tizen-9.0/tv-samsung/emulator-resources/template/x86-standard-template-v2.xml is loaded for tv-samsung-9.0-x86
+[2025.9.11 5:49:50.309][WARNING][JAXBHelper.parseXMLLocked] Failed to open config file - /Users/tareq/tizen-studio/platforms/tizen-9.0/tv-samsung/emulator-resources/devices/ui/device-template-ui.xml
+[2025.9.11 5:49:50.309][WARNING][TemplateLoader.loadTemplate] Failed to load template - /Users/tareq/tizen-studio/platforms/tizen-9.0/tv-samsung/emulator-resources/devices/ui/device-template-ui.xml
+[2025.9.11 5:49:50.335][FINE][VMStatusCell.updateItem] Update status of item: T-samsung-9.0-x86 - READY
+[2025.9.11 5:49:50.359][FINE][VMStatusCell.updateItem] Update status of item: M-6.0-x86 - READY
+[2025.9.11 5:49:50.367][FINE][VMStatusCell.updateItem] Update status of item: T-8.0-x86 - READY
+[2025.9.11 5:49:50.380][FINE][VMStatusCell.updateItem] Update status of item: W-7.0-circle-x86 - READY
+[2025.9.11 5:49:50.386][FINE][VMStatusCell.updateItem] Update status of item: T-samsung-9.0-x86 - READY
+[2025.9.11 5:49:50.408][FINE][FXMLVMTableViewController$9$1.run] Change status of property: M-6.5-x86(WELL)
+[2025.9.11 5:49:50.425][FINE][FXMLVMTableViewController$7$1.run] Create property: M-6.5-x86
+[2025.9.11 5:49:50.427][FINE][FXMLVMTableViewController$8$1.run] Change status of property: M-6.5-x86(READY)
+[2025.9.11 5:49:50.428][FINE][FXMLVMTableViewController$9$1.run] Change status of property: M-7.0-x86(WELL)
+[2025.9.11 5:49:50.429][FINE][FXMLVMTableViewController$7$1.run] Create property: M-7.0-x86
+[2025.9.11 5:49:50.429][FINE][FXMLVMTableViewController$8$1.run] Change status of property: M-7.0-x86(READY)
+[2025.9.11 5:49:50.433][FINE][FXMLVMTableViewController$9$1.run] Change status of property: m-0824-1(WELL)
+[2025.9.11 5:49:50.435][FINE][FXMLVMTableViewController$7$1.run] Create property: m-0824-1
+[2025.9.11 5:49:50.437][FINE][FXMLVMTableViewController$8$1.run] Change status of property: m-0824-1(READY)
+[2025.9.11 5:49:50.442][FINE][FXMLVMTableViewController$9$1.run] Change status of property: T-9.0-x86_64(WELL)
+[2025.9.11 5:49:50.455][FINE][FXMLVMTableViewController$7$1.run] Create property: T-9.0-x86_64
+[2025.9.11 5:49:50.465][FINE][FXMLVMTableViewController$8$1.run] Change status of property: T-9.0-x86_64(READY)
+[2025.9.11 5:49:50.482][FINE][FXMLVMTableViewController$9$1.run] Change status of property: T-9.0-x86(WELL)
+[2025.9.11 5:49:50.484][FINE][FXMLVMTableViewController$7$1.run] Create property: T-9.0-x86
+[2025.9.11 5:49:50.486][FINE][FXMLVMTableViewController$8$1.run] Change status of property: T-9.0-x86(READY)
+[2025.9.11 5:49:50.489][FINE][FXMLVMTableViewController$9$1.run] Change status of property: T-8.0-x86_64(WELL)
+[2025.9.11 5:49:50.491][FINE][FXMLVMTableViewController$7$1.run] Create property: T-8.0-x86_64
+[2025.9.11 5:49:50.493][FINE][FXMLVMTableViewController$8$1.run] Change status of property: T-8.0-x86_64(READY)
+[2025.9.11 5:49:50.518][INFO][TemplateLoader.loadTemplate] /Users/tareq/tizen-studio/platforms/tizen-6.5/mobile/emulator-resources/template/x86-standard-template-v2.xml is loaded for mobile-6.5-x86
+[2025.9.11 5:49:50.523][WARNING][JAXBHelper.parseXMLLocked] Failed to open config file - /Users/tareq/tizen-studio/platforms/tizen-6.5/mobile/emulator-resources/devices/ui/device-template-ui.xml
+[2025.9.11 5:49:50.523][WARNING][TemplateLoader.loadTemplate] Failed to load template - /Users/tareq/tizen-studio/platforms/tizen-6.5/mobile/emulator-resources/devices/ui/device-template-ui.xml
+[2025.9.11 5:49:50.533][FINE][VMStatusCell.updateItem] Update status of item: M-6.5-x86 - READY
+[2025.9.11 5:49:50.558][INFO][TemplateLoader.loadTemplate] /Users/tareq/tizen-studio/platforms/tizen-8.0/tizen/emulator-resources/template/x86-standard-template-v2.xml is loaded for tizen-8.0-x86_64
+[2025.9.11 5:49:50.563][WARNING][JAXBHelper.parseXMLLocked] Failed to open config file - /Users/tareq/tizen-studio/platforms/tizen-8.0/tizen/emulator-resources/devices/ui/device-template-ui.xml
+[2025.9.11 5:49:50.563][WARNING][TemplateLoader.loadTemplate] Failed to load template - /Users/tareq/tizen-studio/platforms/tizen-8.0/tizen/emulator-resources/devices/ui/device-template-ui.xml
+[2025.9.11 5:49:50.578][FINE][VMStatusCell.updateItem] Update status of item: T-8.0-x86_64 - READY
+[2025.9.11 5:49:50.583][FINE][VMStatusCell.updateItem] Update status of item: T-8.0-x86 - READY
+[2025.9.11 5:49:50.598][INFO][TemplateLoader.loadTemplate] /Users/tareq/tizen-studio/platforms/tizen-7.0/mobile/emulator-resources/template/x86-standard-template-v2.xml is loaded for mobile-7.0-x86
+[2025.9.11 5:49:50.605][WARNING][JAXBHelper.parseXMLLocked] Failed to open config file - /Users/tareq/tizen-studio/platforms/tizen-7.0/mobile/emulator-resources/devices/ui/device-template-ui.xml
+[2025.9.11 5:49:50.605][WARNING][TemplateLoader.loadTemplate] Failed to load template - /Users/tareq/tizen-studio/platforms/tizen-7.0/mobile/emulator-resources/devices/ui/device-template-ui.xml
+[2025.9.11 5:49:50.609][FINE][VMStatusCell.updateItem] Update status of item: M-7.0-x86 - READY
+[2025.9.11 5:49:50.625][FINE][VMStatusCell.updateItem] Update status of item: W-7.0-circle-x86 - READY
+[2025.9.11 5:49:50.637][INFO][TemplateLoader.loadTemplate] /Users/tareq/tizen-studio/platforms/tizen-9.0/tizen/emulator-resources/template/x86-standard-template-v2.xml is loaded for tizen-9.0-x86_64
+[2025.9.11 5:49:50.643][WARNING][JAXBHelper.parseXMLLocked] Failed to open config file - /Users/tareq/tizen-studio/platforms/tizen-9.0/tizen/emulator-resources/devices/ui/device-template-ui.xml
+[2025.9.11 5:49:50.643][WARNING][TemplateLoader.loadTemplate] Failed to load template - /Users/tareq/tizen-studio/platforms/tizen-9.0/tizen/emulator-resources/devices/ui/device-template-ui.xml
+[2025.9.11 5:49:50.645][FINE][VMStatusCell.updateItem] Update status of item: T-9.0-x86_64 - READY
+[2025.9.11 5:49:50.664][INFO][TemplateLoader.loadTemplate] /Users/tareq/tizen-studio/platforms/tizen-9.0/tizen/emulator-resources/template/x86-standard-template-v2.xml is loaded for tizen-9.0-x86
+[2025.9.11 5:49:50.674][WARNING][JAXBHelper.parseXMLLocked] Failed to open config file - /Users/tareq/tizen-studio/platforms/tizen-9.0/tizen/emulator-resources/devices/ui/device-template-ui.xml
+[2025.9.11 5:49:50.674][WARNING][TemplateLoader.loadTemplate] Failed to load template - /Users/tareq/tizen-studio/platforms/tizen-9.0/tizen/emulator-resources/devices/ui/device-template-ui.xml
+[2025.9.11 5:49:50.675][FINE][VMStatusCell.updateItem] Update status of item: T-9.0-x86 - READY
+[2025.9.11 5:49:50.684][FINE][VMStatusCell.updateItem] Update status of item: m-0824-1 - READY
+[2025.9.11 5:49:50.686][FINE][VMStatusCell.updateItem] Update status of item: T-samsung-9.0-x86 - READY
+[2025.9.11 5:49:50.718][FINE][VMStatusCell.updateItem] Update status of item: M-6.0-x86 - READY
+[2025.9.11 5:49:50.726][FINE][VMStatusCell.updateItem] Update status of item: M-6.5-x86 - READY
+[2025.9.11 5:49:50.729][FINE][VMStatusCell.updateItem] Update status of item: T-8.0-x86_64 - READY
+[2025.9.11 5:49:50.737][FINE][VMStatusCell.updateItem] Update status of item: T-8.0-x86 - READY
+[2025.9.11 5:49:50.739][FINE][VMStatusCell.updateItem] Update status of item: M-7.0-x86 - READY
+[2025.9.11 5:49:50.740][FINE][VMStatusCell.updateItem] Update status of item: W-7.0-circle-x86 - READY
+[2025.9.11 5:49:50.743][FINE][VMStatusCell.updateItem] Update status of item: T-9.0-x86_64 - READY
+[2025.9.11 5:49:50.747][FINE][VMStatusCell.updateItem] Update status of item: T-9.0-x86 - READY
+[2025.9.11 5:49:50.748][FINE][VMStatusCell.updateItem] Update status of item: m-0824-1 - READY
+[2025.9.11 5:49:50.750][FINE][VMStatusCell.updateItem] Update status of item: T-samsung-9.0-x86 - READY
+[2025.9.11 9:27:30.853][FINE][FXMLVMTableViewController.clickModifyButton] Click modify button
+[2025.9.11 9:27:30.909][FINE][TabViewer.onPageShow] Open Modify tab view
+[2025.9.13 0:32:40.404][FINE][FXMLVMTableViewController.clickCreateButton] Click create button
+[2025.9.13 0:33:0.165][FINE][TabViewer.onPageShow] Open Create tab view
+[2025.9.13 0:34:33.367][FINE][VMEventHandler.create] Start progress indicator for create: tizen-studio-data
+[2025.9.13 0:34:33.370][FINE][FXMLVMTableViewController$1.changed] Show progress indicator
+[2025.9.13 0:34:36.588][INFO][Creator.createRam] createRam method called.
+[2025.9.13 0:34:36.590][INFO][Creator.createUsability] createUsability method called.
+[2025.9.13 0:34:36.770][INFO][VMWorkerCommon.<init>] called VMWorkerCommon.
+[2025.9.13 0:34:36.772][INFO][VMWorkerCommon.initLauncher] called initLauncher of VMWorkerCommon.
+[2025.9.13 0:34:36.774][INFO][Creator.createLocked] Success to create the tizen-studio-data VM
+[2025.9.13 0:34:36.774][FINE][VMEventHandler$7.completed] Stop progress indicator
+[2025.9.13 0:34:36.776][FINE][FXMLVMTableViewController$1$1.run] Hide progress indicator
+[2025.9.13 0:34:37.221][INFO][VMWorkerCommon.<init>] called VMWorkerCommon.
+[2025.9.13 0:34:37.223][FINE][FXMLVMTableViewController$9$1.run] Change status of property: tizen-studio-data(WELL)
+[2025.9.13 0:34:37.224][INFO][VMWorkerCommon.initLauncher] called initLauncher of VMWorkerCommon.
+[2025.9.13 0:34:37.249][FINE][FXMLVMTableViewController$7$1.run] Create property: tizen-studio-data
+[2025.9.13 0:34:37.253][FINE][FXMLVMTableViewController$8$1.run] Change status of property: tizen-studio-data(READY)
+[2025.9.13 0:34:37.279][FINE][VMStatusCell.updateItem] Update status of item: tizen-studio-data - READY
+[2025.9.13 0:34:37.287][FINE][VMStatusCell.updateItem] Update status of item: M-6.0-x86 - READY
+[2025.9.13 0:34:37.288][FINE][VMStatusCell.updateItem] Update status of item: M-6.5-x86 - READY
+[2025.9.13 0:34:37.288][FINE][VMStatusCell.updateItem] Update status of item: T-8.0-x86_64 - READY
+[2025.9.13 0:34:37.289][FINE][VMStatusCell.updateItem] Update status of item: T-8.0-x86 - READY
+[2025.9.13 0:34:37.289][FINE][VMStatusCell.updateItem] Update status of item: M-7.0-x86 - READY
+[2025.9.13 0:34:37.290][FINE][VMStatusCell.updateItem] Update status of item: W-7.0-circle-x86 - READY
+[2025.9.13 0:34:37.290][FINE][VMStatusCell.updateItem] Update status of item: T-9.0-x86_64 - READY
+[2025.9.13 0:34:37.291][FINE][VMStatusCell.updateItem] Update status of item: T-9.0-x86 - READY
+[2025.9.13 0:34:37.292][FINE][VMStatusCell.updateItem] Update status of item: m-0824-1 - READY
+[2025.9.13 0:34:37.302][FINE][VMStatusCell.updateItem] Update status of item: T-samsung-9.0-x86 - READY
+[2025.9.13 0:34:37.313][FINE][VMStatusCell.updateItem] Update status of item: tizen-studio-data - READY
+[2025.9.13 0:34:37.317][FINE][VMStatusCell.updateItem] Update status of item: M-6.0-x86 - READY
+[2025.9.13 0:34:37.318][FINE][VMStatusCell.updateItem] Update status of item: M-6.5-x86 - READY
+[2025.9.13 0:34:37.320][FINE][VMStatusCell.updateItem] Update status of item: T-8.0-x86_64 - READY
+[2025.9.13 0:34:37.321][FINE][VMStatusCell.updateItem] Update status of item: T-8.0-x86 - READY
+[2025.9.13 0:34:37.332][FINE][VMStatusCell.updateItem] Update status of item: M-7.0-x86 - READY
+[2025.9.13 0:34:37.335][FINE][VMStatusCell.updateItem] Update status of item: W-7.0-circle-x86 - READY
+[2025.9.13 0:34:37.336][FINE][VMStatusCell.updateItem] Update status of item: T-9.0-x86_64 - READY
+[2025.9.13 0:34:37.338][FINE][VMStatusCell.updateItem] Update status of item: T-9.0-x86 - READY
+[2025.9.13 0:34:37.338][FINE][VMStatusCell.updateItem] Update status of item: m-0824-1 - READY
+[2025.9.13 0:34:37.340][FINE][VMStatusCell.updateItem] Update status of item: T-samsung-9.0-x86 - READY
+[2025.9.13 0:34:45.900][FINE][FXMLVMTableViewController.clickLaunchButton] Click launch button
+[2025.9.13 0:34:45.902][FINE][VMEventHandler.launch] Start progress indicator for launch: tizen-studio-data
+[2025.9.13 0:34:45.903][FINE][FXMLVMTableViewController$1.changed] Show progress indicator
+[2025.9.13 0:34:45.907][WARNING][VMLauncher.checkVTProperty] Your system cannot support HW virtualization.
+Try install KVM (ubuntu) or HAX (windows or Mac)
+[2025.9.13 0:34:45.907][FINE][VMEventHandler$7.completed] Stop progress indicator
+[2025.9.13 0:34:45.955][FINE][FXMLVMTableViewController$1$1.run] Hide progress indicator

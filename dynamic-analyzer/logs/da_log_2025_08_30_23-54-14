@@ -1,0 +1,76 @@
+[INFO] 2025-08-30 23:54:14:523 | Application.java:140 - The First DA Running
+[INFO] 2025-08-30 23:54:16:403 | AnalyzerPlugin.java:56 - >>> DA version: 20250314-0835, SDK version: 6.1 <<<
+Aug 30, 2025 11:54:16 PM org.tizen.dynamicanalyzer.common.RemoteLogger sendLogs
+INFO: {"statusCode": 200, "body": "\"200 OK\""}
+[DEBUG] 2025-08-30 23:54:17:209 | BaseView.java:276 - [Timeline, Network, File, OpenGL, UI Hierarchy]
+[CHECK] 2025-08-30 23:54:17:223 | EnergyChart.java:75 - This line was comment.(//FIXME)
+[DEBUG] 2025-08-30 23:54:17:310 | DataManagerRegistry.java:47 - Registered PageDataManager: org.tizen.dynamicanalyzer.ui.timeline.common.TimelineDataManager@1e98b788
+[DEBUG] 2025-08-30 23:54:17:310 | DataManagerRegistry.java:47 - Registered PageDataManager: org.tizen.dynamicanalyzer.ui.summary.profiling.FunctionUsageProfiler@2443135
+[DEBUG] 2025-08-30 23:54:17:310 | DataManagerRegistry.java:47 - Registered PageDataManager: org.tizen.dynamicanalyzer.ui.timeline.calltrace.CallTraceDataManager@25953be6
+[DEBUG] 2025-08-30 23:54:17:310 | DataManagerRegistry.java:47 - Registered PageDataManager: org.tizen.dynamicanalyzer.ui.timeline.dlog.DLogDataManager@28e8888d
+[DEBUG] 2025-08-30 23:54:17:310 | DataManagerRegistry.java:47 - Registered PageDataManager: org.tizen.dynamicanalyzer.ui.summary.SummaryDataManager@65c17e38
+[DEBUG] 2025-08-30 23:54:17:311 | DataManagerRegistry.java:47 - Registered PageDataManager: org.tizen.dynamicanalyzer.ui.memory.data.MemoryDataManager@34d480b9
+[DEBUG] 2025-08-30 23:54:17:311 | DataManagerRegistry.java:47 - Registered PageDataManager: org.tizen.dynamicanalyzer.ui.info.screenshot.ScreenshotDataManager@7135ce0a
+[DEBUG] 2025-08-30 23:54:17:338 | DataManagerRegistry.java:47 - Registered PageDataManager: org.tizen.dynamicanalyzer.ui.network.data.NetworkDataManager@ccd341d
+[DEBUG] 2025-08-30 23:54:17:361 | DataManagerRegistry.java:47 - Registered PageDataManager: org.tizen.dynamicanalyzer.ui.file.manager.FileDataManager@373afd6c
+[DEBUG] 2025-08-30 23:54:17:400 | DataManagerRegistry.java:47 - Registered PageDataManager: org.tizen.dynamicanalyzer.ui.opengl.data.GLDataManager@27960b1e
+[DEBUG] 2025-08-30 23:54:17:429 | DataManagerRegistry.java:47 - Registered PageDataManager: org.tizen.dynamicanalyzer.ui.hierarchy.HierarchyDataManager@58278366
+[DEBUG] 2025-08-30 23:54:17:449 | BaseView.java:209 - delete temp folder
+[DEBUG] 2025-08-30 23:54:17:451 | IDECommunicator.java:539 - IDE-DA Server port 52820
+[DEBUG] 2025-08-30 23:54:17:453 | IDECommunicator.java:128 - Waiting IDE Client : 0
+[DEBUG] 2025-08-30 23:54:17:678 | IDECommunicator.java:131 - Connected IDE : 1
+[DEBUG] 2025-08-30 23:54:17:681 | IDECommunicator.java:132 - accept clientSocket : 52821
+[DEBUG] 2025-08-30 23:54:17:682 | IDECommunicator.java:155 - IDE recvMessage Wait : 1
+[DEBUG] 2025-08-30 23:54:17:682 | IDECommunicator.java:137 - Start IDE AcceptThread
+[DEBUG] 2025-08-30 23:54:17:682 | IDECommunicator.java:156 - thread clientSocket : 52821
+[DEBUG] 2025-08-30 23:54:17:682 | IDECommunicator.java:128 - Waiting IDE Client : 1
+[DEBUG] 2025-08-30 23:54:17:682 | IDECommunicator.java:131 - Connected IDE : 2
+[DEBUG] 2025-08-30 23:54:17:682 | IDECommunicator.java:132 - accept clientSocket : 52822
+[DEBUG] 2025-08-30 23:54:17:682 | IDECommunicator.java:155 - IDE recvMessage Wait : 2
+[DEBUG] 2025-08-30 23:54:17:682 | IDECommunicator.java:137 - Start IDE AcceptThread
+[DEBUG] 2025-08-30 23:54:17:683 | IDECommunicator.java:156 - thread clientSocket : 52822
+[DEBUG] 2025-08-30 23:54:17:683 | IDECommunicator.java:128 - Waiting IDE Client : 2
+[DEBUG] 2025-08-30 23:54:17:693 | IDECommunicator.java:159 - STATUS`,native`,
+[DEBUG] 2025-08-30 23:54:17:696 | IDECommunicator.java:155 - IDE recvMessage Wait : 2
+[DEBUG] 2025-08-30 23:54:17:696 | IDECommunicator.java:156 - thread clientSocket : 52821
+[DEBUG] 2025-08-30 23:54:17:957 | FlatFeatureDialogTargetPage.java:176 - other disconnected
+[DEBUG] 2025-08-30 23:54:17:958 | FlatFeatureDialogTargetPage.java:176 - mobile disconnected
+[DEBUG] 2025-08-30 23:54:17:958 | FlatFeatureDialogTargetPage.java:176 - tv disconnected
+[DEBUG] 2025-08-30 23:54:17:958 | FlatFeatureDialogTargetPage.java:176 - wearable disconnected
+[DEBUG] 2025-08-30 23:54:17:966 | FlatFeatureDialogSelectedFeaturePage.java:301 - [CPU_USAGE, NETWORK_IO, UI_HIERARCHY_ANALYSIS, NETWORK_ANALYSIS, FILE_ANALYSIS, OPENGLES_ANALYSIS]
+[DEBUG] 2025-08-30 23:54:17:976 | FlatFeatureDialogFeatureListPage.java:327 - Available FlatFeature list: [CPU_USAGE, CPU_USAGE_PER_CORE, CPU_FREQ_PER_CORE, SYSTEM_MEMORY, PROCESS_MEMORY, MEMORY_ALLOC, DISK_IO, FILE_ANALYSIS, OPENGLES_ANALYSIS, NETWORK_IO, NETWORK_ANALYSIS, UI_EVENT, SCREENSHOT, UI_HIERARCHY_ANALYSIS, THREAD_ANALYSIS, PERIPHERAL_STATUS, POWER_ESTIMATION]
+Warning: the fonts "Times" and "Lucida Bright" are not available for the Java logical font "Serif", which may have unexpected appearance or behavior. Re-enable the "Times" font to remove this warning.
+[DEBUG] 2025-08-30 23:54:40:357 | FlatFeatureDialogFeatureListPage.java:327 - Available FlatFeature list: [CPU_USAGE, CPU_USAGE_PER_CORE, CPU_FREQ_PER_CORE, SYSTEM_MEMORY, PROCESS_MEMORY, MEMORY_ALLOC, DISK_IO, FILE_ANALYSIS, OPENGLES_ANALYSIS, NETWORK_IO, NETWORK_ANALYSIS, UI_EVENT, SCREENSHOT, UI_HIERARCHY_ANALYSIS, THREAD_ANALYSIS, PERIPHERAL_STATUS, POWER_ESTIMATION]
+[DEBUG] 2025-08-30 23:54:40:381 | FlatFeatureDialogSelectedFeaturePage.java:301 - [CPU_USAGE, CPU_USAGE_PER_CORE, CPU_FREQ_PER_CORE, POWER_ESTIMATION, PERIPHERAL_STATUS, THREAD_ANALYSIS, NETWORK_IO, NETWORK_ANALYSIS, UI_HIERARCHY_ANALYSIS, UI_EVENT, OPENGLES_ANALYSIS, DISK_IO, FILE_ANALYSIS, MEMORY_ALLOC, PROCESS_MEMORY, SYSTEM_MEMORY]
+[DEBUG] 2025-08-30 23:54:47:157 | GUIAction.java:272 - wearable
+[DEBUG] 2025-08-30 23:54:47:164 | BaseView.java:276 - [Timeline, Memory, Thread, Network, File, OpenGL, UI Hierarchy]
+[WARNING] 2025-08-30 23:54:47:305 | DATabComposite.java:493 - [Left table view] can't remove tab Persistent AllocationsView
+[WARNING] 2025-08-30 23:54:47:313 | DATabComposite.java:493 - [Left table view] can't remove tab LeaksView
+[WARNING] 2025-08-30 23:54:47:321 | DATabComposite.java:493 - [Right table view] can't remove tab null
+[DEBUG] 2025-08-30 23:54:47:325 | DataManagerRegistry.java:47 - Registered PageDataManager: org.tizen.dynamicanalyzer.ui.memory.data.HeapDataManager@150d6eaf
+[DEBUG] 2025-08-30 23:54:47:326 | DataManagerRegistry.java:47 - Registered PageDataManager: org.tizen.dynamicanalyzer.ui.memory.data.LsanDataManager@7345f97d
+[DEBUG] 2025-08-30 23:54:47:367 | DataManagerRegistry.java:47 - Registered PageDataManager: org.tizen.dynamicanalyzer.ui.thread.data.ThreadDataManager@47a3d56a
+[DEBUG] 2025-08-30 23:54:47:434 | GUIAction.java:293 - [Power Estimation, UI Event, Frame rate, Heap Allocation, UI Hierarchy, Thread, Disk IO, Peripheral Status, System Memory, Network IO, CPU Usage, Core Usage, Core Frequency, File Analysis, Process Memory]
+[DEBUG] 2025-08-30 23:54:47:438 | GUIAction.java:299 - [Power Estimation, UI Event, Frame rate, Heap Allocation, UI Hierarchy, Thread, Disk IO, Peripheral Status, System Memory, Network IO, CPU Usage, Core Usage, Core Frequency, File Analysis, Process Memory]
+[DEBUG] 2025-08-30 23:54:57:645 | DAToolBarCustomCombo.java:514 - No such ID on itemIDs array: da.id.dummy.select.device
+[DEBUG] 2025-08-31 00:02:13:910 | DAToolBarCustomCombo.java:514 - No such ID on itemIDs array: da.id.dummy.select.device
+[DEBUG] 2025-08-31 00:02:29:133 | SideWorker.java:74 - expected interrupt exception
+[DEBUG] 2025-08-31 00:02:29:135 | SideWorker.java:83 - Side worker thread is terminated
+[DEBUG] 2025-08-31 00:02:29:342 | AnalyzerPlugin.java:79 - Delete temp folder!
+***WARNING: Display must be created on main thread due to Cocoa restrictions.
+Exception in thread "Timer-12" org.eclipse.swt.SWTException: Invalid thread access
+	at org.eclipse.swt.SWT.error(SWT.java:4533)
+	at org.eclipse.swt.SWT.error(SWT.java:4448)
+	at org.eclipse.swt.SWT.error(SWT.java:4419)
+	at org.eclipse.swt.widgets.Display.error(Display.java:1089)
+	at org.eclipse.swt.widgets.Display.createDisplay(Display.java:840)
+	at org.eclipse.swt.widgets.Display.create(Display.java:823)
+	at org.eclipse.swt.graphics.Device.<init>(Device.java:129)
+	at org.eclipse.swt.widgets.Display.<init>(Display.java:722)
+	at org.eclipse.swt.widgets.Display.<init>(Display.java:713)
+	at org.eclipse.swt.widgets.Display.getDefault(Display.java:1419)
+	at org.tizen.dynamicanalyzer.widgets.animation.DAAnimationIcon$2.run(DAAnimationIcon.java:102)
+	at java.util.TimerThread.mainLoop(Timer.java:555)
+	at java.util.TimerThread.run(Timer.java:505)
+Aug 31, 2025 12:02:30 AM org.tizen.dynamicanalyzer.common.RemoteLogger sendLogs
+INFO: {"statusCode": 200, "body": "\"200 OK!\""}

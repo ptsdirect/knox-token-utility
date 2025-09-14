@@ -1,0 +1,124 @@
+<!-- Production Readiness Consolidated README (2025-09-14) -->
+
+# Knox Guard Token Utility (Java 21)
+
+Apache 2.0 licensed CLI + library for Samsung Knox Guard token flows: ES256 JWT generation, certificate-based signing, access token lifecycle, device enrollment scaffolding, and supporting crypto helpers. Production hardened with coverage, static analysis, and license enforcement.
+
+## Feature Matrix
+
+| Domain | Capability |
+|--------|-----------|
+| JWT | Client Identifier, Session, Access wrapper, Device Enrollment (legacy) |
+| Keys | EC P-256 PKCS#8 private key parsing; public key export (Base64 DER) |
+| Certificate | `certificate.json` flexible field parser + consolidated signing methods |
+| HTTP | Access, refresh, validate, enroll (OkHttp + Jackson) |
+| Crypto | RSA small-payload encryption utility |
+| Versioning | `X-KNOX-API-VERSION` header + path normalization groundwork |
+| Quality | JaCoCo thresholds, SpotBugs, Checkstyle, License plugin |
+| Packaging | Fat JAR via maven-assembly-plugin |
+
+## Build
+```bash
+mvn -q clean verify
+```
+Artifact: `target/knox-token-utility-1.0.0-jar-with-dependencies.jar`
+
+### Fast Build (Low Disk / Iteration)
+Skips tests, coverage, SpotBugs, and Checkstyle:
+```bash
+mvn -Pfast -Dfast -q clean package
+```
+Only use for rapid local iteration or when disk pressure prevents full verify. Always run the full `clean verify` before releasing.
+
+### Low-Space Build (Keep Tests + Minimal Coverage)
+Runs tests and enforces coverage, but trims report size (XML only) and skips site/report plugins:
+```bash
+mvn -Plowspace -Dlowspace clean verify
+```
+Produces minimal JaCoCo output under `target/jacoco-min*`.
+
+### Disk Cleanup Helper (macOS)
+Interactive script (prompts before each action) to reclaim space commonly blocking coverage report generation:
+```bash
+scripts/disk_cleanup_mac.sh
+```
+Review the script before running; it targets DerivedData, simulator caches, npm cache, brew cleanup, stale Maven artifacts, user caches, optional Docker prune.
+
+## CLI Usage
+```bash
+java -jar target/knox-token-utility-1.0.0-jar-with-dependencies.jar --help
+```
+Representative modes: `sign-client-idp`, `sign-session`, `sign-access`, `export-public`, `encrypt`, `request-token`, `validate-token`, `enroll-device`.
+
+## certificate.json Example
+```json
+{
+  "clientId": "YOUR_CLIENT_ID",
+  "privateKey": "-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n",
+  "publicKey": "-----BEGIN PUBLIC KEY-----\n...\n-----END PUBLIC KEY-----\n"
+}
+```
+
+## Programmatic Snippet
+```java
+try (InputStream pk = Files.newInputStream(Path.of("private_key.pem"))) {
+    String jwt = KnoxTokenUtility.generateSignedClientIdentifierJWT(pk, "YOUR_CLIENT_ID", null);
+    String pub = KnoxTokenUtility.getPublicKeyBase64(Path.of("public_key.pem"));
+    KnoxAuthClient client = new KnoxAuthClient();
+    Map<String,Object> token = client.requestAccessToken(pub, jwt, 30);
+    System.out.println(token.get("accessToken"));
+}
+```
+
+## Environment (.env Supported)
+`KNOX_BASE_URL`, `KNOX_CLIENT_ID`, `KNOX_CLIENT_PASSWORD`, `KNOX_API_VERSION`, etc. Quotes are stripped; values cached after first read.
+
+## Security
+- Keep private keys & certificate JSON out of VCS.
+- Long-lived JWT (10y) only for client identifier flows; shorten if policy requires.
+- RSA helper is for very small secrets only.
+
+## Quality Gates (Current)
+- Instruction Coverage: > 80%
+- Branch Coverage: > 60%
+- License headers verified
+- SpotBugs: non-fatal reporting
+
+## Deprecations
+`KnoxCertificateJwtUtility` is deprecated and delegates to `KnoxTokenUtility`; remove after migration (planned for >=1.1.0). The legacy helper `getPublicKeyFromPrivateKey` has been removed—always supply an explicit public key path and use `KnoxTokenUtility.getPublicKeyBase64(Path)`.
+
+## Roadmap
+- Remove deprecated facade
+- Add stable TokenClient integration tests (MockWebServer)
+- Elevate coverage thresholds
+- Structured JSON logging profile
+- Formal CHANGELOG & release automation
+
+## License
+Apache License 2.0. See headers and forthcoming `LICENSE` file if distributing externally.
+
+## Maintenance: Low Disk Advanced Strategies
+
+If coverage reports still fail due to space:
+1. Remove stale Xcode simulator runtimes (Xcode > Settings > Platforms).
+2. Clear DerivedData: `rm -rf ~/Library/Developer/Xcode/DerivedData/*`.
+3. Prune Homebrew: `brew cleanup -s`.
+4. Trim Maven repo (last-access > 30 days):
+  ```bash
+  find ~/.m2/repository -type f -atime +30 -delete
+  ```
+5. Relocate Maven repository to external volume:
+  ```bash
+  mv ~/.m2 /Volumes/ExternalDisk/.m2
+  ln -s /Volumes/ExternalDisk/.m2 ~/.m2
+  ```
+  Or set a custom path in `~/.mavenrc`:
+  ```bash
+  export MAVEN_OPTS="-Dmaven.repo.local=/Volumes/ExternalDisk/m2repo"
+  ```
+6. Use low-space profile first: `mvn -Plowspace -Dlowspace clean verify` before a full run.
+
+Never publish a release built only with `-Pfast`.
+
+---
+Generated during production hardening phase (2025-09-14).

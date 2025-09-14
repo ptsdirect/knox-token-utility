@@ -1,0 +1,78 @@
+[2025.8.30 13:53:31.202][INFO][Main.initializeLogger] Start Emulator Manager CLI!!
+[2025.8.30 13:53:31.244][WARNING][ProfileList.get] cannot find profile
+[2025.8.30 13:53:31.248][WARNING][ProfileList.get] cannot find profile
+[2025.8.30 13:53:31.249][WARNING][ProfileList.get] cannot find profile
+[2025.8.30 13:53:31.252][WARNING][ProfileList.get] cannot find profile
+[2025.8.30 13:53:31.268][WARNING][EMLogger.printStackTrace] java.lang.NoClassDefFoundError: org/tizen/emulator/manager/ui/item/CommonViewItemFactoryV3
+	at java.lang.ClassLoader.defineClass1(Native Method)
+	at java.lang.ClassLoader.defineClass(ClassLoader.java:756)
+	at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142)
+	at java.net.URLClassLoader.defineClass(URLClassLoader.java:473)
+	at java.net.URLClassLoader.access$100(URLClassLoader.java:74)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:369)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:363)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:362)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:418)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:351)
+	at org.tizen.emulator.manager.plugin.EMPlugin.prepareLegacyEndpoint(EMPlugin.java:327)
+	at org.tizen.emulator.manager.plugin.EMPlugin.initEMPlugin(EMPlugin.java:171)
+	at org.tizen.emulator.manager.platform.Preparer.initializePlugin(Preparer.java:172)
+	at org.tizen.emulator.manager.platform.Preparer.initPlatformList(Preparer.java:139)
+	at org.tizen.emulator.manager.platform.Preparer.execute(Preparer.java:66)
+	at org.tizen.emulator.manager.EmulatorManager.initialize(EmulatorManager.java:61)
+	at org.tizen.emulator.manager.console.Main.startConsoleProcessor(Main.java:21)
+	at org.tizen.emulator.manager.console.Main.main(Main.java:65)
+Caused by: java.lang.ClassNotFoundException: org.tizen.emulator.manager.ui.item.CommonViewItemFactoryV3
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:387)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:418)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:351)
+	... 19 more
+
+[2025.8.30 13:53:31.276][WARNING][StandardPlatformImageValue.createInstance] info.ini file does not exist.
+[2025.8.30 13:53:31.277][WARNING][StandardPlatformImageValue.createInstance] info.ini file does not exist.
+[2025.8.30 13:53:31.278][WARNING][StandardPlatformImageValue.createInstance] info.ini file does not exist.
+[2025.8.30 13:53:31.284][WARNING][StandardPlatformImageValue.createInstance] info.ini file does not exist.
+[2025.8.30 13:53:31.284][WARNING][StandardPlatformImageValue.createInstance] info.ini file does not exist.
+[2025.8.30 13:53:31.677][WARNING][SkinList.loadSkins] This skin directory does not exist: /Users/tareq/tizen-studio/platforms/tizen-9.0/tizen/emulator-resources/skins
+[2025.8.30 13:53:31.681][INFO][VMWorkerCommon.<init>] called VMWorkerCommon.
+[2025.8.30 13:53:31.681][INFO][VMWorkerCommon.initLauncher] called initLauncher of VMWorkerCommon.
+[2025.8.30 13:53:31.713][WARNING][SkinList.loadSkins] This skin directory does not exist: /Users/tareq/tizen-studio/platforms/tizen-8.0/tizen/emulator-resources/skins
+[2025.8.30 13:53:31.713][INFO][VMWorkerCommon.<init>] called VMWorkerCommon.
+[2025.8.30 13:53:31.713][INFO][VMWorkerCommon.initLauncher] called initLauncher of VMWorkerCommon.
+[2025.8.30 13:53:31.732][WARNING][SkinList.loadSkins] This skin directory does not exist: /Users/tareq/tizen-studio/platforms/tizen-7.0/wearable/emulator-resources/skins
+[2025.8.30 13:53:31.732][INFO][VMWorkerCommon.<init>] called VMWorkerCommon.
+[2025.8.30 13:53:31.732][INFO][VMWorkerCommon.initLauncher] called initLauncher of VMWorkerCommon.
+[2025.8.30 13:53:31.772][WARNING][SkinList.loadSkins] This skin directory does not exist: /Users/tareq/tizen-studio/platforms/tizen-9.0/tizen/emulator-resources/skins
+[2025.8.30 13:53:31.773][INFO][VMWorkerCommon.<init>] called VMWorkerCommon.
+[2025.8.30 13:53:31.773][INFO][VMWorkerCommon.initLauncher] called initLauncher of VMWorkerCommon.
+[2025.8.30 13:53:31.797][WARNING][SkinList.loadSkins] This skin directory does not exist: /Users/tareq/tizen-studio/platforms/tizen-7.0/mobile/emulator-resources/skins
+[2025.8.30 13:53:31.798][INFO][VMWorkerCommon.<init>] called VMWorkerCommon.
+[2025.8.30 13:53:31.798][INFO][VMWorkerCommon.initLauncher] called initLauncher of VMWorkerCommon.
+[2025.8.30 13:53:31.815][INFO][VMWorkerCommon.<init>] called VMWorkerCommon.
+[2025.8.30 13:53:31.816][INFO][VMWorkerCommon.initLauncher] called initLauncher of VMWorkerCommon.
+[2025.8.30 13:53:31.855][INFO][VMWorkerCommon.<init>] called VMWorkerCommon.
+[2025.8.30 13:53:31.855][INFO][VMWorkerCommon.initLauncher] called initLauncher of VMWorkerCommon.
+[2025.8.30 13:53:31.867][WARNING][SkinList.loadSkins] This skin directory does not exist: /Users/tareq/tizen-studio/platforms/tizen-8.0/tizen/emulator-resources/skins
+[2025.8.30 13:53:31.867][INFO][VMWorkerCommon.<init>] called VMWorkerCommon.
+[2025.8.30 13:53:31.868][INFO][VMWorkerCommon.initLauncher] called initLauncher of VMWorkerCommon.
+[2025.8.30 13:53:31.869][WARNING][SkinList.loadSkins] This skin directory does not exist: /Users/tareq/tizen-studio/platforms/tizen-6.5/mobile/emulator-resources/skins
+[2025.8.30 13:53:31.871][INFO][HelperClass.runProcess] Try to run external process: [/Users/tareq/tizen-studio/tools/emulator/bin/check-cam]
+[2025.8.30 13:53:31.871][INFO][HelperClass.runProcess]  -- Working dir : /Users/tareq/tizen-studio/temp/mobile-6.5-emulator-image-x86
+[2025.8.30 13:53:31.921][INFO][CheckWebcam.work] Support webcam : false
+[2025.8.30 13:53:31.921][INFO][HelperClass.runProcess] Try to run external process: [/Users/tareq/tizen-studio/tools/emulator/bin/check-gl]
+[2025.8.30 13:53:31.922][INFO][HelperClass.runProcess]  -- Working dir : /Users/tareq/tizen-studio/temp/mobile-6.5-emulator-image-x86
+[2025.8.30 13:53:32.7][INFO][CheckGPU.work] Support GPU: true
+[2025.8.30 13:53:32.7][INFO][CheckGPU.work] Gallium: false
+[2025.8.30 13:53:32.8][WARNING][ProcessOutputReader.run] Stream closed
+[2025.8.30 13:53:32.9][INFO][HelperClass.runProcess] Try to run external process: [/Users/tareq/tizen-studio/tools/emulator/bin/check-hax]
+[2025.8.30 13:53:32.9][INFO][HelperClass.runProcess]  -- Working dir : /Users/tareq/tizen-studio/temp/mobile-6.5-emulator-image-x86
+[2025.8.30 13:53:32.42][INFO][CheckVT.work] Support HW virtualization: false
+[2025.8.30 13:53:32.42][WARNING][ProcessOutputReader.run] Stream closed
+[2025.8.30 13:53:32.43][INFO][CheckVT.work] non-UG: false
+[2025.8.30 13:53:32.869][INFO][Creator.createRam] createRam method called.
+[2025.8.30 13:53:32.869][INFO][Creator.createUsability] createUsability method called.
+[2025.8.30 13:53:32.912][INFO][VMWorkerCommon.<init>] called VMWorkerCommon.
+[2025.8.30 13:53:32.912][INFO][VMWorkerCommon.initLauncher] called initLauncher of VMWorkerCommon.
+[2025.8.30 13:53:32.912][INFO][Creator.createLocked] Success to create the M-6.5-x86 VM
+[2025.8.30 13:53:32.913][INFO][Main$EMShutdownHook.run] EMShutdownHook called

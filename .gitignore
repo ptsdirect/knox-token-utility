@@ -1,0 +1,86 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# Node.js dependencies
+node_modules
+.pnp
+.pnp.js
+
+# testing
+coverage
+prisma-client
+
+# next.js
+.next/
+out/
+build
+
+# Node.js debug
+npm-debug.log*
+
+# Node.js local env files
+.env.development.local
+.env.test.local
+.env.production.local
+
+# turbo
+.turbo
+
+# vercel
+.vercel
+
+.eslintcache
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# IDE
+.idea/
+*.iws
+*.iml
+*.ipr
+.vscode/
+.classpath
+.project
+.settings/
+*.swp
+*.swo
+*~
+
+# OS & misc
+.DS_Store
+*.pem
+*.log
+.env
+.env.local
+
+# Generated keys (if any)
+*.key
+private_key*
+public_key*
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+temp/
+
+# JaCoCo
+*.exec
+
+# Package Files
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<profiles active="SamsungCertificateExtensionExtra" version="3.1">
+<profile name="PTSDIRECT">
+<profileitem ca="" distributor="0" key="/Users/tareq/SamsungCertificate/PTSDIRECT/author.p12" password="/Users/tareq/SamsungCertificate/PTSDIRECT/author.pwd" rootca=""/>
+<profileitem ca="" distributor="1" key="/Users/tareq/SamsungCertificate/PTSDIRECT/distributor.p12" password="/Users/tareq/SamsungCertificate/PTSDIRECT/distributor.pwd" rootca=""/>
+<profileitem ca="" distributor="2" key="/Users/tareq/SamsungCertificate/PTSDIRECT/distributor.p12" password="/Users/tareq/SamsungCertificate/PTSDIRECT/distributor.pwd" rootca=""/>
+</profile>
+<profile name="AppleCare">
+<profileitem ca="" distributor="0" key="/Users/tareq/SamsungCertificate/AppleCare/author.p12" password="/Users/tareq/SamsungCertificate/AppleCare/author.pwd" rootca=""/>
+<profileitem ca="" distributor="1" key="/Users/tareq/SamsungCertificate/AppleCare/distributor.p12" password="/Users/tareq/SamsungCertificate/AppleCare/distributor.pwd" rootca=""/>
+<profileitem ca="" distributor="2" key="/Users/tareq/SamsungCertificate/AppleCare/distributor.p12" password="/Users/tareq/SamsungCertificate/AppleCare/distributor.pwd" rootca=""/>
+</profile>
+<profile name="SamsungCa">
+<profileitem ca="" distributor="0" key="/Users/tareq/SamsungCertificate/SamsungCa/author.p12" password="/Users/tareq/SamsungCertificate/SamsungCa/author.pwd" rootca=""/>
+<profileitem ca="" distributor="1" key="/Users/tareq/SamsungCertificate/SamsungCa/author.p12" password="/Users/tareq/SamsungCertificate/SamsungCa/author.pwd" rootca=""/>
+<profileitem ca="" distributor="2" key="" password="" rootca=""/>
+</profile>
+<profile name="SamsungCertificateExtensionExtra">
+<profileitem ca="" distributor="0" key="/Users/tareq/SamsungCertificate/SamsungCertificateExtensionExtra/author.p12" password="/Users/tareq/SamsungCertificate/SamsungCertificateExtensionExtra/author.pwd" rootca=""/>
+<profileitem ca="" distributor="1" key="/Users/tareq/tizen-studio/tools/certificate-generator/certificates/distributor/tizen-distributor-signer.p12" password="/Users/tareq/tizen-studio-data/tools/certificate-generator/certificates/distributor/tizen-distributor-signer.pwd" rootca=""/>
+<profileitem ca="" distributor="2" key="" password="" rootca=""/>
+</profile>
+</profiles>

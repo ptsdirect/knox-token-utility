@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<EmulatorConfiguration xmlns="http://www.tizen.org/em">
+    <baseInformation>
+        <name>M-7.0-x86</name>
+        <architecture>x86</architecture>
+        <platform>mobile-7.0-x86</platform>
+        <deviceTemplate name="WVGA Mobile" version="1.0">
+            <path>/Users/tareq/tizen-studio/platforms/common/mobile/emulator-resources/devices/WVGA-Mobile.xml</path>
+        </deviceTemplate>
+        <diskImage profile="mobile" type="standard" version="7.0">
+            <diskImageFile format="qcow2" type="child">/Users/tareq/tizen-studio-data/emulator/vms/M-7.0-x86/emulimg-M-7.0-x86.x86</diskImageFile>
+            <diskImageFile format="qcow2" type="base" version="0.0.228">/Users/tareq/tizen-studio/platforms/tizen-7.0/mobile/emulator-images/mobile-7.0-x86/emulimg-7.0.x86</diskImageFile>
+            <diskImageFile format="qcow2" type="swap">/Users/tareq/tizen-studio-data/emulator/vms/M-7.0-x86/swap-M-7.0-x86.img</diskImageFile>
+        </diskImage>
+    </baseInformation>
+    <usability>
+        <logging>
+            <level>NONE</level>
+        </logging>
+        <fileSharing/>
+        <hwVirtualization>false</hwVirtualization>
+        <hwGLAcceleration>true</hwGLAcceleration>
+        <SupportSuspend>false</SupportSuspend>
+    </usability>
+    <device>
+        <display>
+            <resolution>
+                <width>480</width>
+                <height>800</height>
+            </resolution>
+            <density unit="dpi">233</density>
+            <screenSize unit="inch" value="4.0"/>
+            <skinPath>
+                <path>/Users/tareq/tizen-studio/platforms/common/mobile/emulator-resources/skins/mobile-general-3btn</path>
+            </skinPath>
+        </display>
+        <CPU>
+            <value unit="cpu">1</value>
+        </CPU>
+        <RAM>
+            <size unit="MiB">1024</size>
+        </RAM>
+        <touch maxTouchPoint="10"/>
+    </device>
+    <advancedOption>
+        <option name="displayMode">
+            <subOption name="qtEnable" value="on"/>
+        </option>
+        <option name="jack">
+            <subOption name="earjack" value="on"/>
+            <subOption name="charger" value="on"/>
+            <subOption name="usb" value="on"/>
+        </option>
+        <option name="sensor">
+            <subOption name="accel" value="on"/>
+            <subOption name="gyro" value="on"/>
+            <subOption name="geo" value="on"/>
+            <subOption name="proxi" value="on"/>
+            <subOption name="light" value="on"/>
+            <subOption name="haptic" value="on"/>
+            <subOption name="press" value="on"/>
+            <subOption name="uv" value="on"/>
+            <subOption name="hrm" value="on"/>
+            <subOption name="pedo" value="on"/>
+        </option>
+        <option name="camera">
+            <subOption name="rear" value="on"/>
+            <subOption name="front" value="off"/>
+            <subOption name="rearType" value="Virtual"/>
+            <subOption name="rearImage" value="/Users/tareq/tizen-studio/tools/emulator/images/default-image2.gif"/>
+        </option>
+        <option name="proxy">
+            <subOption name="proxyMode" value="auto"/>
+            <subOption name="httpProxy" value=""/>
+            <subOption name="httpsProxy" value=""/>
+            <subOption name="ftpProxy" value=""/>
+            <subOption name="socksProxy" value=""/>
+        </option>
+        <option name="netIpInfo">
+            <subOption name="useDHCP" value="off"/>
+            <subOption name="ipAddr" value=""/>
+            <subOption name="subnet" value=""/>
+            <subOption name="gateway" value=""/>
+        </option>
+        <option name="connectivity">
+            <subOption name="nfc" value="on"/>
+        </option>
+        <option name="glVersion" value="v2.0_v3.0"/>
+        <option name="netConnectType" value="NAT"/>
+        <option name="netTapDevice" value=""/>
+        <option name="hostIp" value="10.0.2.2"/>
+        <option name="netDns" value=""/>
+        <option name="netMac" value=""/>
+    </advancedOption>
+</EmulatorConfiguration>
