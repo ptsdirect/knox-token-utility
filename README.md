@@ -118,6 +118,20 @@ Apache License 2.0. See headers and forthcoming `LICENSE` file if distributing e
 ### Automated Release (Tag-Based)
 Push an annotated tag `vX.Y.Z` and CI will build & attach the fat JAR as artifact. Optional extended release automation can be added if needed.
 
+Reference: See `docs/GPG_SIGNING.md` to enable GPG-signed commits and tags.
+
+## SBOM & Build Provenance
+A CycloneDX SBOM (`target/sbom.json` & `target/sbom.xml`) is generated during `mvn verify`.
+Tagged releases attach both SBOM files plus a GitHub build provenance attestation (SLSA-style) for the fat JAR.
+
+Quick verify locally:
+```bash
+mvn -q clean verify
+jq '.components | length' target/sbom.json
+```
+
+More details & future roadmap (signing SBOM, SPDX, VEX) in `docs/SBOM.md`.
+
 ## Publishing / Releasing
 Two approaches:
 

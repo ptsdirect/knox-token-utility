@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      attestations: write
+      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,8 +29,20 @@ jobs:
       - name: Compute checksum
         run: |
           JAR=$(ls target/knox-token-utility-*-jar-with-dependencies.jar)
-            shasum -a 256 "$JAR" > SHA256SUMS
-            echo "JAR_PATH=$JAR" >> $GITHUB_ENV
+          shasum -a 256 "$JAR" > SHA256SUMS
+          echo "JAR_PATH=$JAR" >> $GITHUB_ENV
+          if [ -f target/sbom.json ]; then echo "SBOM_JSON=target/sbom.json" >> $GITHUB_ENV; fi
+          if [ -f target/sbom.xml ]; then echo "SBOM_XML=target/sbom.xml" >> $GITHUB_ENV; fi
+
+      - name: Upload SBOM Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom
+          path: |
+            target/sbom.json
+            target/sbom.xml
+          if-no-files-found: ignore
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
@@ -36,6 +50,13 @@ jobs:
           files: |
             ${{ env.JAR_PATH }}
             SHA256SUMS
+            target/sbom.json
+            target/sbom.xml
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate build provenance (SLSA Attestation)
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-path: ${{ env.JAR_PATH }}

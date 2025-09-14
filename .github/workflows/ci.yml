@@ -30,6 +30,16 @@ jobs:
       - name: Verify
         run: mvn -B -ntp clean verify
 
+      - name: Upload SBOM
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom
+          path: |
+            target/sbom.json
+            target/sbom.xml
+          if-no-files-found: ignore
+
       - name: Upload Fat JAR (Release Tags)
         if: startsWith(github.ref, 'refs/tags/v')
         uses: actions/upload-artifact@v4

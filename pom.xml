@@ -13,6 +13,7 @@
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <main.class>com.samsung.knoxwsm.token.TokenClient</main.class>
+        <checkstyle.suppressions.file>${project.basedir}/checkstyle-suppressions.xml</checkstyle.suppressions.file>
     </properties>
 
     <dependencies>
@@ -180,6 +181,7 @@
                 <version>3.4.0</version>
                 <configuration>
                     <configLocation>google_checks.xml</configLocation>
+                    <suppressionsFile>${checkstyle.suppressions.file}</suppressionsFile>
                     <consoleOutput>true</consoleOutput>
                     <failsOnError>false</failsOnError>
                     <linkXRef>false</linkXRef>
@@ -246,6 +248,28 @@
                         <phase>verify</phase>
                         <goals>
                             <goal>check-file-header</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.cyclonedx</groupId>
+                <artifactId>cyclonedx-maven-plugin</artifactId>
+                <version>2.7.9</version>
+                <configuration>
+                    <schemaVersion>1.5</schemaVersion>
+                    <includeBomSerialNumber>true</includeBomSerialNumber>
+                    <includeLicenseText>false</includeLicenseText>
+                    <projectType>library</projectType>
+                    <cycloneDxOutputFormat>all</cycloneDxOutputFormat>
+                    <outputName>sbom</outputName>
+                    <includeTestScope>false</includeTestScope>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>makeAggregateBom</goal>
                         </goals>
                     </execution>
                 </executions>
