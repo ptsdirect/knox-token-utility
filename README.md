@@ -2,6 +2,10 @@
 
 # Knox Guard Token Utility (Java 21)
 
+![CI](https://github.com/YOUR_ORG/knox-token-utility/actions/workflows/ci.yml/badge.svg)
+![Coverage](https://codecov.io/gh/YOUR_ORG/knox-token-utility/branch/main/graph/badge.svg)
+![Release](https://img.shields.io/github/v/release/YOUR_ORG/knox-token-utility?sort=semver)
+
 Apache 2.0 licensed CLI + library for Samsung Knox Guard token flows: ES256 JWT generation, certificate-based signing, access token lifecycle, device enrollment scaffolding, and supporting crypto helpers. Production hardened with coverage, static analysis, and license enforcement.
 
 ## Feature Matrix
@@ -96,6 +100,23 @@ try (InputStream pk = Files.newInputStream(Path.of("private_key.pem"))) {
 
 ## License
 Apache License 2.0. See headers and forthcoming `LICENSE` file if distributing externally.
+
+## Continuous Integration & Coverage
+| Aspect | Details |
+|--------|---------|
+| CI Workflow | `.github/workflows/ci.yml` triggers on PRs, pushes, and `v*.*.*` tags |
+| JDK | Temurin 21 |
+| Quality Gates | `mvn clean verify` (JaCoCo thresholds, SpotBugs, Checkstyle, license) |
+| Artifacts | Fat JAR (tag builds), Surefire & JaCoCo reports uploaded |
+| Coverage Upload | Optional Codecov (set `CODECOV_TOKEN` secret) |
+
+### Enabling Codecov
+1. Create project in Codecov (GitHub app or token).
+2. Add repo secret `CODECOV_TOKEN`.
+3. Merge a change to main; badge will update.
+
+### Automated Release (Tag-Based)
+Push an annotated tag `vX.Y.Z` and CI will build & attach the fat JAR as artifact. Optional extended release automation can be added if needed.
 
 ## Maintenance: Low Disk Advanced Strategies
 

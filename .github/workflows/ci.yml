@@ -3,6 +3,7 @@ name: CI
 on:
   push:
     branches: [ main, master ]
+    tags: [ 'v*.*.*' ]
   pull_request:
     branches: [ main, master ]
   workflow_dispatch:
@@ -10,6 +11,8 @@ on:
 jobs:
   build-test:
     runs-on: ubuntu-latest
+    env:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN || '' }}
     strategy:
       matrix:
         java: [ '21' ]
@@ -26,6 +29,13 @@ jobs:
 
       - name: Verify
         run: mvn -B -ntp clean verify
+
+      - name: Upload Fat JAR (Release Tags)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: actions/upload-artifact@v4
+        with:
+          name: knox-token-utility-fat-jar
+          path: target/knox-token-utility-*-jar-with-dependencies.jar
 
       - name: Upload Surefire Reports
         if: always()

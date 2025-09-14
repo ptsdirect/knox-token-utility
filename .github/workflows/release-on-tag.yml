@@ -1,0 +1,41 @@
+name: Release (Tag)
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Temurin JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
+
+      - name: Build
+        run: mvn -B -ntp clean verify
+
+      - name: Compute checksum
+        run: |
+          JAR=$(ls target/knox-token-utility-*-jar-with-dependencies.jar)
+            shasum -a 256 "$JAR" > SHA256SUMS
+            echo "JAR_PATH=$JAR" >> $GITHUB_ENV
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            ${{ env.JAR_PATH }}
+            SHA256SUMS
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
