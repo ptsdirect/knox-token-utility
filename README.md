@@ -222,6 +222,18 @@ dig +dnssec TXT _openpgpkey.example.org | grep -i ad
 
 CI optional validation: set secrets `DNS_FPR_FQDN` and `DNS_FPR_EXPECTED` to have the release workflow perform a non-fatal DNS fingerprint check.
 
+### Key Rotation Overview
+Structured metadata file: `docs/key-metadata.json`
+Scripts:
+```bash
+# Rotate to new key
+./scripts/update-key-metadata.sh NEWFPR ed25519 signing
+
+# Validate metadata vs signing key (run in CI)
+./scripts/validate-key-metadata.sh
+```
+Policy: annual rotation + 30-day overlap (details in `SECURITY.md`).
+
 ## Publishing / Releasing
 Two approaches:
 

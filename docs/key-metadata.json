@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "current": {
+    "fingerprint": "<CURRENT_FPR>",
+    "created": "<ISO8601_CREATED>",
+    "expires": null,
+    "algorithm": "ed25519|rsa4096|p256",
+    "usage": ["signing"],
+    "revoked": false
+  },
+  "previous": [
+    {
+      "fingerprint": "<OLD_FPR_PLACEHOLDER>",
+      "retired": "<ISO8601_RETIRED>",
+      "supersededBy": "<CURRENT_FPR>",
+      "overlapUntil": "<ISO8601_OVERLAP_END>",
+      "revoked": false
+    }
+  ],
+  "policy": {
+    "rotationIntervalDays": 365,
+    "overlapDays": 30,
+    "revocationOnCompromise": true
+  }
+}

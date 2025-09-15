@@ -130,3 +130,35 @@ If both are present the release workflow runs `verify-fingerprint-dns.sh` and lo
 | Resolver tampering | DNSSEC AD flag + independent `delv` query |
 | Single-channel compromise | Cross-validate (DNS + release asset + repo + well-known) |
 | Key rotation confusion | Publish new + old for overlap, add `validFrom` in SECURITY.md |
+
+## Key Rotation Policy
+We maintain structured metadata in `docs/key-metadata.json` capturing current and previous signing key fingerprints.
+
+### Policy Parameters
+| Parameter | Value (default) | Rationale |
+|-----------|-----------------|-----------|
+| Rotation Interval | 365 days | Annual hygiene |
+| Overlap Window | 30 days | Allow ecosystem to trust both keys |
+| Compromise Response | Immediate revoke + emergency rotation | Minimize blast radius |
+
+### Rotation Steps
+1. Generate new key & export armored private/public.
+2. Add new public key to publication channels (DNS TXT, docs, well-known) in pending state.
+3. Run:
+```bash
+./scripts/update-key-metadata.sh NEWFINGERPRINT ed25519 signing
+```
+4. Commit updated `docs/key-metadata.json` and updated fingerprint files.
+5. Release a new version; both old and new signatures appear during overlap.
+6. After overlap period, update metadata: set `overlapUntil` for retired key and optionally mark `revoked` if decommissioned.
+7. (If compromise) Immediately mark `revoked": true` on affected key and remove from publication channels.
+
+### Validation
+CI release workflow runs `scripts/validate-key-metadata.sh` (non-fatal). To enforce strictness, make the step fail on mismatch.
+
+### Future Enhancements
+| Idea | Benefit |
+|------|--------|
+| Signed key-metadata JSON | Tamper evidence |
+| Rekor inclusion of metadata hash | Transparency & auditability |
+| Automatic overlap expiry PR | Ensures timely cleanup |
