@@ -6,7 +6,7 @@
 
     <groupId>com.mdttee.knox</groupId>
     <artifactId>pts</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 
     <name>Knox Guard Token Utility</name>
     <description>Utility library &amp; CLI for Samsung Knox Guard token generation, signing, enrollment flows, and supply-chain hardened artifacts.</description>
