@@ -33,6 +33,8 @@ jobs:
           echo "JAR_PATH=$JAR" >> $GITHUB_ENV
           if [ -f target/sbom.json ]; then echo "SBOM_JSON=target/sbom.json" >> $GITHUB_ENV; fi
           if [ -f target/sbom.xml ]; then echo "SBOM_XML=target/sbom.xml" >> $GITHUB_ENV; fi
+          SPDX_JSON=$(ls target/site/*.spdx.json 2>/dev/null || true)
+          if [ -n "$SPDX_JSON" ]; then echo "SPDX_JSON=$SPDX_JSON" >> $GITHUB_ENV; fi
 
       - name: Upload SBOM Artifacts
         if: always()
@@ -42,7 +44,32 @@ jobs:
           path: |
             target/sbom.json
             target/sbom.xml
+            ${{ env.SPDX_JSON }}
           if-no-files-found: ignore
+
+      - name: Import GPG key (for SBOM signing)
+        if: env.GPG_PRIVATE_KEY != '' && env.GPG_PASSPHRASE != ''
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY || '' }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE || '' }}
+        run: |
+          echo "$GPG_PRIVATE_KEY" | base64 --decode | gpg --batch --import
+          KEYID=$(gpg --list-secret-keys --with-colons | awk -F: '/^sec:/ {print $5; exit}')
+          echo "GPG_KEYID=$KEYID" >> $GITHUB_ENV
+
+      - name: Sign SBOM / SPDX artifacts
+        if: env.GPG_KEYID != ''
+        run: |
+          set -euo pipefail
+          sign() {
+            FILE="$1"; [ -f "$FILE" ] || return 0; gpg --batch --yes --pinentry-mode loopback --passphrase "$GPG_PASSPHRASE" --armor --detach-sign "$FILE"; }
+          export GPG_PASSPHRASE='${{ secrets.GPG_PASSPHRASE || '' }}'
+          sign target/sbom.json
+          sign target/sbom.xml
+          if [ -n "${SPDX_JSON:-}" ]; then sign "$SPDX_JSON"; fi
+        env:
+          SPDX_JSON: ${{ env.SPDX_JSON }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE || '' }}
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
@@ -52,6 +79,10 @@ jobs:
             SHA256SUMS
             target/sbom.json
             target/sbom.xml
+            ${{ env.SPDX_JSON }}
+            target/sbom.json.asc
+            target/sbom.xml.asc
+            ${{ env.SPDX_JSON }}.asc
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

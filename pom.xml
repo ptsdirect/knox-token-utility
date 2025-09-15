@@ -274,6 +274,27 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.spdx</groupId>
+                <artifactId>spdx-maven-plugin</artifactId>
+                <version>0.7.2</version>
+                <executions>
+                    <execution>
+                        <id>create-spdx</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>createSPDX</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
+                            <outputFileName>spdx</outputFileName>
+                            <outputFormat>JSON</outputFormat>
+                            <includeTests>false</includeTests>
+                            <skipGitInfo>true</skipGitInfo>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
     <licenses>

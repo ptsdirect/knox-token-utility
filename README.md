@@ -120,17 +120,33 @@ Push an annotated tag `vX.Y.Z` and CI will build & attach the fat JAR as artifac
 
 Reference: See `docs/GPG_SIGNING.md` to enable GPG-signed commits and tags.
 
-## SBOM & Build Provenance
-A CycloneDX SBOM (`target/sbom.json` & `target/sbom.xml`) is generated during `mvn verify`.
-Tagged releases attach both SBOM files plus a GitHub build provenance attestation (SLSA-style) for the fat JAR.
+## SBOM, SPDX & Build Provenance
+During `mvn verify` the build emits:
+| Format | Files |
+|--------|-------|
+| CycloneDX | `target/sbom.json`, `target/sbom.xml` |
+| SPDX | `target/site/<group_artifact_version>.spdx.json` |
 
-Quick verify locally:
+On tagged releases these SBOMs are attached along with:
+| Integrity Artifact | Description |
+|--------------------|-------------|
+| SHA256SUMS | Digest of the fat JAR |
+| Build Provenance | GitHub SLSA-style attestation for the fat JAR |
+| *.asc (conditional) | GPG detached signatures for each SBOM (if GPG secrets configured) |
+
+Quick local check:
 ```bash
 mvn -q clean verify
 jq '.components | length' target/sbom.json
+jq '.packages | length' target/site/*.spdx.json 2>/dev/null || echo 'SPDX file not found'
 ```
 
-More details & future roadmap (signing SBOM, SPDX, VEX) in `docs/SBOM.md`.
+Signature verification (example):
+```bash
+gpg --verify sbom.json.asc sbom.json
+```
+
+See `docs/SBOM.md` for details on dual-format rationale, signing, and future hardening (VEX, license policy, Sigstore).
 
 ## Publishing / Releasing
 Two approaches:

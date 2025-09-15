@@ -2,14 +2,19 @@
 
 This project generates a CycloneDX Software Bill of Materials (SBOM) and attaches build provenance (SLSA-style attestation) to tagged releases.
 
-## 1. SBOM Generation
-The CycloneDX Maven plugin runs during `verify` and produces both JSON and XML:
+## 1. SBOM Generation (CycloneDX + SPDX)
+During `mvn verify` two SBOM formats are now produced:
 
-Generated files:
+CycloneDX (JSON + XML):
 ```
- target/sbom.json
- target/sbom.xml
+target/sbom.json
+target/sbom.xml
 ```
+SPDX (JSON):
+```
+target/site/<artifact>.spdx.json
+```
+The SPDX file name includes the Maven coordinates (e.g. `com.samsung.knoxwsm_knox-token-utility-1.0.0.spdx.json`).
 
 Command (manual regeneration):
 ```bash
@@ -50,20 +55,41 @@ gh attestation download --repo YOUR_ORG/knox-token-utility --subject "sha256:<di
 ```
 (Requires `gh` CLI with the attestation extension.)
 
-## 6. Why CycloneDX?
-CycloneDX is widely adopted, supports license, vulnerability, and dependency graph analysis, and is a CNCF/JTC1 recognized SBOM format. SPDX can be added later if needed for ecosystems requiring SPDX tag/value or JSON.
+## 6. Why CycloneDX & SPDX?
+CycloneDX offers rich component, service, and dependency graph semantics and rapid innovation (VEX, attestation extensions). SPDX is an ISO standard broadly required in some compliance and regulatory pipelines. Emitting both maximizes interoperability with scanners, risk platforms, and policy engines.
 
-## 7. Next Hardening Steps (Optional)
+## 7. Automated SBOM Signing
+If repository secrets `GPG_PRIVATE_KEY` (ASCII-armored or base64 of exported key) and `GPG_PASSPHRASE` are configured, the release workflow will:
+1. Import the GPG private key.
+2. Generate detached ASCII signatures for:
+  - `sbom.json` -> `sbom.json.asc`
+  - `sbom.xml` -> `sbom.xml.asc`
+  - `<artifact>.spdx.json` -> `<artifact>.spdx.json.asc`
+3. Attach signatures to the GitHub Release.
+
+### Verifying Signatures Locally
+```bash
+curl -LO https://github.com/YOUR_ORG/knox-token-utility/releases/download/v1.0.0/sbom.json
+curl -LO https://github.com/YOUR_ORG/knox-token-utility/releases/download/v1.0.0/sbom.json.asc
+gpg --keyserver hkps://keys.openpgp.org --recv-keys <KEYID>
+gpg --verify sbom.json.asc sbom.json
+```
+Repeat for `sbom.xml` and the SPDX file.
+
+### Key Distribution Recommendation
+Publish the maintainer public key fingerprint in `README.md` and optionally in a DNS TXT record or Sigstore Rekor transparency log for discoverability.
+
+## 8. Next Hardening Steps (Optional)
 | Area | Action |
 |------|--------|
-| SBOM Integrity | Sign SBOM file with GPG and attach signature (`sbom.json.asc`). |
-| Multiple Formats | Add SPDX via `spdx-maven-plugin`. |
+| SBOM Integrity | Add Sigstore (cosign) signing for SBOM and JAR. |
+| Multiple Formats | (DONE) SPDX via `spdx-maven-plugin`. |
 | VEX | Integrate vulnerability disclosure (CycloneDX VEX) once triage process defined. |
 | SLSA Level | Adopt dedicated build environment or reusable workflow to claim higher SLSA level. |
 | Dependency Scanning | Add `oss-review-toolkit` or `trivy fs` scanning job. |
 | License Policy | Add automated license classification & deny list check. |
 
-## 8. Manually Signing SBOM (Optional)
+## 9. Manually Signing SBOM (Optional)
 After build:
 ```bash
 gpg --armor --detach-sign target/sbom.json
@@ -73,7 +99,7 @@ Attach `sbom.json.asc` to the release for consumers to verify:
 gpg --verify sbom.json.asc sbom.json
 ```
 
-## 9. Automation Hints
+## 10. Automation Hints
 To auto sign in workflow (future):
 ```yaml
 - name: Sign SBOM
@@ -82,7 +108,7 @@ To auto sign in workflow (future):
 ```
 (Requires imported private key & passphrase in secrets.)
 
-## 10. Consuming the SBOM in CI
+## 11. Consuming the SBOM in CI
 Example: fail build if forbidden license appears:
 ```bash
 jq -e '.components[] | select(.licenses[]?.license.id == "AGPL-3.0")' target/sbom.json && {
