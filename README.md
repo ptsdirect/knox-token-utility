@@ -220,6 +220,8 @@ dig +dnssec TXT _openpgpkey.example.org | grep -i ad
 ./scripts/verify-fingerprint-dns.sh _openpgpkey.example.org <FPR>
 ```
 
+CI optional validation: set secrets `DNS_FPR_FQDN` and `DNS_FPR_EXPECTED` to have the release workflow perform a non-fatal DNS fingerprint check.
+
 ## Publishing / Releasing
 Two approaches:
 

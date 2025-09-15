@@ -115,6 +115,15 @@ The helper script:
 ```
 Returns non-zero exit if fingerprint mismatches or missing.
 
+### CI Automation (Optional)
+Set repository secrets to enable release workflow DNS verification step:
+| Secret | Purpose |
+|--------|---------|
+| `DNS_FPR_FQDN` | Fully-qualified domain name of fingerprint TXT record (e.g. `_openpgpkey.example.org`) |
+| `DNS_FPR_EXPECTED` | Expected uppercase hex fingerprint (no spaces) |
+
+If both are present the release workflow runs `verify-fingerprint-dns.sh` and logs a warning (non-fatal) on mismatch.
+
 ### Threat Model Notes
 | Risk | Mitigation |
 |------|------------|

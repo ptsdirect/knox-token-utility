@@ -114,6 +114,17 @@ jobs:
           [ -f target/sbom.xml ] && sign target/sbom.xml || true
           [ -n "${SPDX_JSON:-}" ] && sign "$SPDX_JSON" || true
 
+      - name: Verify DNS Fingerprint (Optional)
+        if: env.GPG_FINGERPRINT != '' && env.DNS_FPR_FQDN != '' && env.DNS_FPR_EXPECTED != ''
+        env:
+          DNS_FPR_FQDN: ${{ secrets.DNS_FPR_FQDN || '' }}
+          DNS_FPR_EXPECTED: ${{ secrets.DNS_FPR_EXPECTED || '' }}
+        run: |
+          echo "Expected fingerprint: $DNS_FPR_EXPECTED"
+          ./scripts/verify-fingerprint-dns.sh "$DNS_FPR_FQDN" "$DNS_FPR_EXPECTED" || {
+            echo "[warn] DNS fingerprint validation failed" >&2;
+          }
+
       - name: Upload Cosign Signatures
         if: always()
         uses: actions/upload-artifact@v4
