@@ -24,7 +24,7 @@ Each release provides multiple integrity layers:
 | Mechanism | Purpose |
 |-----------|---------|
 | SHA256SUMS | Basic checksum of fat JAR |
-| GPG Signatures (`*.asc`) | Authenticity of SBOMs (and optionally JAR if added later) |
+| GPG Signatures (`*.asc`) | Authenticity of SBOMs and fat JAR |
 | Cosign Signatures (`*.sig`) | Keyless OIDC-backed signatures for JAR & SBOMs |
 | SLSA Build Provenance | Verifiable build metadata linking source commit to artifact |
 
@@ -32,7 +32,17 @@ Each release provides multiple integrity layers:
 ```bash
 gpg --keyserver hkps://keys.openpgp.org --recv-keys <MAINTAINER_KEYID>
 gpg --verify sbom.json.asc sbom.json
+gpg --verify knox-token-utility-<ver>-jar-with-dependencies.jar.asc \
+  knox-token-utility-<ver>-jar-with-dependencies.jar
 ```
+
+Fingerprint publication:
+1. `KEY_FINGERPRINT` file attached to release.
+2. Same fingerprint documented here (placeholder):
+```
+<MAINTAINER_FINGERPRINT_PLACEHOLDER>
+```
+3. (Recommended) Publish fingerprint via DNS TXT or project website for out-of-band trust.
 
 ### Cosign Verification (Keyless)
 ```bash

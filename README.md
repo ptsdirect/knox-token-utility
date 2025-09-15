@@ -167,6 +167,7 @@ Run locally after build:
 | GPG Signatures | `.asc` for SBOMs (conditional) |
 | Cosign Keyless | `.sig` for JAR + SBOMs (OIDC-backed) |
 | SLSA Provenance | GitHub provenance attestation |
+| GPG JAR Signature | `<fat-jar>.asc` detached signature (new) |
 
 Quick cosign verification (after downloading artifacts):
 ```bash
@@ -175,6 +176,16 @@ cosign verify-blob \
   --certificate-oidc-issuer https://token.actions.githubusercontent.com \
   --certificate-identity-regexp ".*" sbom.json
 ```
+
+### GPG JAR Verification
+Download the JAR and its `.asc` plus `KEY_FINGERPRINT` file:
+```bash
+gpg --keyserver hkps://keys.openpgp.org --recv-keys <MAINTAINER_KEY_ID>
+cat KEY_FINGERPRINT
+gpg --verify knox-token-utility-<version>-jar-with-dependencies.jar.asc \
+    knox-token-utility-<version>-jar-with-dependencies.jar
+```
+Match the printed fingerprint to `KEY_FINGERPRINT` (and optionally a value published out-of-band in SECURITY.md).
 
 See `SECURITY.md` and `scripts/verify-release.sh` for end-to-end verification workflow.
 

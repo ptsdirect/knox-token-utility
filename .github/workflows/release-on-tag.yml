@@ -67,6 +67,12 @@ jobs:
           sign target/sbom.json
           sign target/sbom.xml
           if [ -n "${SPDX_JSON:-}" ]; then sign "$SPDX_JSON"; fi
+          # Sign fat JAR
+          if [ -f "$JAR_PATH" ]; then sign "$JAR_PATH"; fi
+          # Export fingerprint
+          FPR=$(gpg --list-secret-keys --with-colons | awk -F: '/^fpr:/ {print $10; exit}')
+          echo "$FPR" > KEY_FINGERPRINT
+          echo "GPG_FINGERPRINT=$FPR" >> $GITHUB_ENV
         env:
           SPDX_JSON: ${{ env.SPDX_JSON }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE || '' }}
@@ -76,6 +82,7 @@ jobs:
         with:
           files: |
             ${{ env.JAR_PATH }}
+            ${{ env.JAR_PATH }}.asc
             SHA256SUMS
             target/sbom.json
             target/sbom.xml
@@ -83,6 +90,7 @@ jobs:
             target/sbom.json.asc
             target/sbom.xml.asc
             ${{ env.SPDX_JSON }}.asc
+            KEY_FINGERPRINT
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
