@@ -189,6 +189,31 @@ Match the printed fingerprint to `KEY_FINGERPRINT` (and optionally a value publi
 
 See `SECURITY.md` and `scripts/verify-release.sh` for end-to-end verification workflow.
 
+### Public Fingerprint Publication
+To enable out-of-band trust the maintainer fingerprint is published via multiple channels:
+| Channel | Location |
+|---------|----------|
+| Release Asset | `KEY_FINGERPRINT` |
+| Repository | `docs/KEY_FINGERPRINT.txt` |
+| Well-Known Path | `docs/.well-known/openpgp-fingerprint` (served if docs site hosted) |
+| (Recommended) DNS TXT | `_openpgpkey.<domain>` or custom TXT record |
+
+#### DNS TXT Example
+```
+_openpgpkey.example.org. 3600 IN TXT "v=OpenPGP; fpr=<REPLACE_WITH_ACTUAL_FPR>"
+```
+Alternative generic TXT:
+```
+maintainer-fpr.example.org. 3600 IN TXT "gpg-fingerprint=<REPLACE_WITH_ACTUAL_FPR>"
+```
+
+#### Fetch Well-Known (if hosted)
+```bash
+curl -s https://example.org/.well-known/openpgp-fingerprint
+```
+
+Always compare at least two independent sources (e.g., DNS + release asset).
+
 ## Publishing / Releasing
 Two approaches:
 

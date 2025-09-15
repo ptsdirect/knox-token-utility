@@ -43,6 +43,25 @@ Fingerprint publication:
 <MAINTAINER_FINGERPRINT_PLACEHOLDER>
 ```
 3. (Recommended) Publish fingerprint via DNS TXT or project website for out-of-band trust.
+4. (Optional) Serve `.well-known/openpgp-fingerprint` on project domain.
+
+### DNS TXT Record Formats
+OpenPGP standardized style:
+```
+_openpgpkey.example.org. 3600 IN TXT "v=OpenPGP; fpr=<REPLACE_WITH_ACTUAL_FPR>"
+```
+
+Generic label variant:
+```
+maintainer-fpr.example.org. 3600 IN TXT "gpg-fingerprint=<REPLACE_WITH_ACTUAL_FPR>"
+```
+
+Verification:
+```bash
+dig +short TXT _openpgpkey.example.org
+curl -s https://example.org/.well-known/openpgp-fingerprint
+```
+Compare outputs to release `KEY_FINGERPRINT`.
 
 ### Cosign Verification (Keyless)
 ```bash
