@@ -4,15 +4,41 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.samsung.knoxwsm</groupId>
-    <artifactId>knox-token-utility</artifactId>
+    <groupId>com.mdttee.knox</groupId>
+    <artifactId>pts</artifactId>
     <version>1.0.0</version>
+
+    <name>Knox Guard Token Utility</name>
+    <description>Utility library &amp; CLI for Samsung Knox Guard token generation, signing, enrollment flows, and supply-chain hardened artifacts.</description>
+    <url>https://github.com/ptsdirect/knox-token-utility</url>
+
+    <scm>
+    <connection>scm:git:https://github.com/ptsdirect/knox-token-utility.git</connection>
+    <developerConnection>scm:git:git@github.com:ptsdirect/knox-token-utility.git</developerConnection>
+    <url>https://github.com/ptsdirect/knox-token-utility</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <issueManagement>
+        <system>GitHub Issues</system>
+    <url>https://github.com/ptsdirect/knox-token-utility/issues</url>
+    </issueManagement>
+
+    <developers>
+        <developer>
+            <id>maintainer</id>
+            <name>Main Maintainer</name>
+            <email>dev@mdttee.com</email>
+            <organization>mdttee</organization>
+            <organizationUrl>https://mdttee.com</organizationUrl>
+        </developer>
+    </developers>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <main.class>com.samsung.knoxwsm.token.TokenClient</main.class>
+    <main.class>com.samsung.knoxwsm.token.Launcher</main.class>
         <checkstyle.suppressions.file>${project.basedir}/checkstyle-suppressions.xml</checkstyle.suppressions.file>
     </properties>
 
@@ -102,6 +128,46 @@
                     <target>21</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals><goal>jar</goal></goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.6.3</version>
+                <configuration>
+                    <source>21</source>
+                    <encoding>UTF-8</encoding>
+                    <failOnError>false</failOnError>
+                    <doclint>none</doclint>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals><goal>jar</goal></goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>3.2.4</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals><goal>sign</goal></goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
@@ -305,6 +371,15 @@
         </license>
     </licenses>
         <profiles>
+            <profile>
+                <id>release</id>
+                <properties>
+                    <!-- Ensure GPG signing is active (plugin already bound at verify) -->
+                    <gpg.skip>false</gpg.skip>
+                    <!-- Disable fast/lowspace tweaks -->
+                    <maven.test.skip>false</maven.test.skip>
+                </properties>
+            </profile>
             <profile>
                 <id>fast</id>
                 <activation>

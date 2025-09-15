@@ -53,11 +53,39 @@ import org.slf4j.LoggerFactory;
  * Client for interacting with the Samsung Knox Cloud Authentication API.
  */
 public class KnoxAuthClient {
-    // Default production endpoint (may already contain the version segment)
-    private static final String DEFAULT_API_BASE_URL = "https://api.samsungknox.com/kcs/v1";
+    // Default production endpoint (global fallback if region not specified)
+    private static final String DEFAULT_API_BASE_URL = "https://us-api.samsungknox.com/kcs/v1";
+    // Default Guard functional base (Upload / operational endpoints) - spec currently at v1.1
+    private static final String DEFAULT_GUARD_FUNCTION_BASE = "https://us-kcs-api.samsungknox.com/kcs/v1.1/kg";
+    // Region mapping (minimal) - extend as needed
+    private static String resolveRegionalBaseUrl() {
+        String explicit = System.getenv("KNOX_API_BASE_URL");
+        if (explicit != null && !explicit.isBlank()) return explicit;
+        String region = System.getenv().getOrDefault("KNOX_REGION", "").toLowerCase();
+        // Known region codes: us, eu, ap (example). Default to us if unspecified/unknown.
+        return switch (region) {
+            case "eu" -> "https://eu-api.samsungknox.com/kcs/v1";
+            case "ap" -> "https://ap-api.samsungknox.com/kcs/v1";
+            case "us", "" -> "https://us-api.samsungknox.com/kcs/v1";
+            default -> "https://" + region + "-api.samsungknox.com/kcs/v1"; // last attempt (custom region code)
+        };
+    }
+    // Resolve Guard functional base (separate host pattern us-kcs-api vs us-api). Allow override via KNOX_GUARD_FUNCTION_BASE_URL.
+    private static String resolveGuardFunctionBaseUrl() {
+        String explicit = System.getenv("KNOX_GUARD_FUNCTION_BASE_URL");
+        if (explicit != null && !explicit.isBlank()) return explicit.replaceAll("/+$$", "");
+        String region = System.getenv().getOrDefault("KNOX_REGION", "").toLowerCase();
+        return switch (region) {
+            case "eu" -> "https://eu-kcs-api.samsungknox.com/kcs/v1.1/kg";
+            case "ap" -> "https://ap-kcs-api.samsungknox.com/kcs/v1.1/kg";
+            case "us", "" -> DEFAULT_GUARD_FUNCTION_BASE;
+            default -> "https://" + region + "-kcs-api.samsungknox.com/kcs/v1.1/kg";
+        };
+    }
     // Desired API version (header + path injection only if not already present in base URL)
     protected static final String API_VERSION = System.getenv().getOrDefault("KNOX_API_VERSION", "v1");
     private final String apiBaseUrl;
+    private final String guardFunctionBaseUrl; // for /devices/uploads etc.
     // Build full URL ensuring we don't duplicate version segment when apiBaseUrl already ends with /vX or /vX.Y
     private String buildUrl(String relativePath) {
         String base = apiBaseUrl;
@@ -73,10 +101,14 @@ public class KnoxAuthClient {
     private final ObjectMapper mapper;
 
     public KnoxAuthClient() {
-        this(System.getenv().getOrDefault("KNOX_API_BASE_URL", DEFAULT_API_BASE_URL));
+        this(resolveRegionalBaseUrl(), resolveGuardFunctionBaseUrl());
     }
 
     public KnoxAuthClient(String apiBaseUrl) {
+        this(apiBaseUrl, resolveGuardFunctionBaseUrl());
+    }
+
+    public KnoxAuthClient(String apiBaseUrl, String guardFunctionBaseUrl) {
         this.client = new OkHttpClient.Builder()
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
@@ -85,6 +117,7 @@ public class KnoxAuthClient {
         this.mapper = new ObjectMapper();
         // normalize remove trailing slash
         this.apiBaseUrl = apiBaseUrl.replaceAll("/+$$", "");
+        this.guardFunctionBaseUrl = guardFunctionBaseUrl.replaceAll("/+$$", "");
     }
 
     /**
@@ -237,6 +270,113 @@ public class KnoxAuthClient {
             String responseBody = safeBodyString(response);
             return mapper.readValue(responseBody, Map.class);
         }
+    }
+
+    /**
+     * Upload a batch of devices (Knox Guard Upload API). Assumes caller already possesses an access token.
+     * @param accessToken x-knox-apitoken header value
+     * @param uploadPayload JSON string containing deviceList and optional flags (autoAccept, autoLock, etc.)
+     * @return parsed response map
+     */
+    public Map<String,Object> uploadDevices(String accessToken, String uploadPayload) throws IOException {
+        if (uploadPayload == null || uploadPayload.isBlank()) throw new IllegalArgumentException("uploadPayload required");
+        String url = guardFunctionBaseUrl + "/devices/uploads";
+        Request request = new Request.Builder()
+            .url(url)
+            .header("x-knox-apitoken", accessToken)
+            .header("X-KNOX-API-VERSION", API_VERSION)
+            .post(RequestBody.create(uploadPayload, JSON))
+            .build();
+        log.debug("Uploading devices payloadSize={}", uploadPayload.length());
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                log.warn("Device upload failed status={} url={}", response.code(), request.url());
+                throw buildApiException(response, "upload devices", null);
+            }
+            return mapper.readValue(safeBodyString(response), Map.class);
+        }
+    }
+
+    /** List device uploads (last 1000). */
+    public Map<String,Object> listDeviceUploads(String accessToken) throws IOException {
+        String url = guardFunctionBaseUrl + "/devices/uploads";
+        Request request = new Request.Builder()
+            .url(url)
+            .header("x-knox-apitoken", accessToken)
+            .header("X-KNOX-API-VERSION", API_VERSION)
+            .get().build();
+        log.debug("Listing device uploads");
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                log.warn("List uploads failed status={} url={}", response.code(), request.url());
+                throw buildApiException(response, "list device uploads", null);
+            }
+            return mapper.readValue(safeBodyString(response), Map.class);
+        }
+    }
+
+    /** Get upload details by uploadId. */
+    public Map<String,Object> getUploadById(String accessToken, String uploadId) throws IOException {
+        if (uploadId == null || uploadId.isBlank()) throw new IllegalArgumentException("uploadId required");
+        String url = guardFunctionBaseUrl + "/devices/uploads/" + uploadId;
+        Request request = new Request.Builder()
+            .url(url)
+            .header("x-knox-apitoken", accessToken)
+            .header("X-KNOX-API-VERSION", API_VERSION)
+            .get().build();
+        log.debug("Fetching uploadId={}", uploadId);
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                log.warn("Get upload failed status={} id={} url={}", response.code(), uploadId, request.url());
+                throw buildApiException(response, "get upload details", null);
+            }
+            return mapper.readValue(safeBodyString(response), Map.class);
+        }
+    }
+
+    /**
+     * Unlock a previously enrolled device. Endpoint path is configurable via env var KNOX_GUARD_UNLOCK_PATH (default /kguard/devices/unlock).
+     * NOTE: Endpoint pattern assumed; adjust if server returns 404 and update KNOX_GUARD_UNLOCK_PATH accordingly.
+     * @param accessToken Access token (Bearer)
+     * @param deviceImei IMEI (15 digits)
+     * @return response map
+     */
+    public Map<String,Object> unlockDevice(String accessToken, String deviceImei) throws IOException {
+        if (deviceImei == null || !deviceImei.matches("\\d{14,16}")) {
+            throw new IllegalArgumentException("deviceImei must be 15-digit numeric (allowing temporary 14-16 for testing)");
+        }
+        String path = System.getenv().getOrDefault("KNOX_GUARD_UNLOCK_PATH", "/kguard/devices/unlock");
+        String requestBody = mapper.writeValueAsString(Map.of(
+            "deviceId", deviceImei,
+            "action", "unlock"
+        ));
+        Request request = new Request.Builder()
+            .url(buildUrl(path))
+            .header("Authorization", "Bearer " + accessToken)
+            .header("X-KNOX-API-VERSION", API_VERSION)
+            .post(RequestBody.create(requestBody, JSON))
+            .build();
+        log.debug("Unlocking device imei={}", deviceImei);
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                log.warn("Unlock device failed status={} url={}", response.code(), request.url());
+                throw buildApiException(response, "unlock device", null);
+            }
+            return mapper.readValue(safeBodyString(response), Map.class);
+        }
+    }
+
+    /**
+     * Convenience helper: enroll then immediately unlock the device, returning a composite result map.
+     * Keys: enrollment, unlock.
+     */
+    public Map<String,Object> enrollAndUnlock(String accessToken, String deviceImei, String clientId) throws IOException {
+        Map<String,Object> enrollment = enrollDeviceInKnoxGuard(accessToken, deviceImei, clientId);
+        Map<String,Object> unlock = unlockDevice(accessToken, deviceImei);
+        java.util.HashMap<String,Object> combined = new java.util.HashMap<>();
+        combined.put("enrollment", enrollment);
+        combined.put("unlock", unlock);
+        return combined;
     }
 
     // Helper to read body safely without NPE.

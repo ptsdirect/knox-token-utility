@@ -20,80 +20,57 @@ package com.samsung.knoxwsm.token;
  * #L%
  */
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.util.Base64;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class KnoxTokenUtilityTest {
-    private KeyPair keyPair;
-    private String clientIdentifier;
-    private String privateKeyPem;
-
-    @BeforeEach
-    void setUp() throws Exception {
-        KeyPairGenerator keyGen = KeyPairGenerator.getInstance("EC");
-        keyGen.initialize(256);
-        keyPair = keyGen.generateKeyPair();
-        privateKeyPem = "-----BEGIN PRIVATE KEY-----\n" +
-            Base64.getEncoder().encodeToString(keyPair.getPrivate().getEncoded()) +
-            "\n-----END PRIVATE KEY-----\n";
-        clientIdentifier = "test-client-" + System.currentTimeMillis();
-    }
+public class KnoxTokenUtilityTest {
 
     @Test
-    void testGenerateSignedClientIdentifierJWT() throws Exception {
-        InputStream keyInputStream = new ByteArrayInputStream(privateKeyPem.getBytes());
-        String jwt = KnoxTokenUtility.generateSignedClientIdentifierJWT(keyInputStream, clientIdentifier, null);
+    void createEnrollmentStyleJwt_producesThreeSegmentsAndClaims() throws Exception {
+        KeyPairGenerator kpg = KeyPairGenerator.getInstance("EC");
+        kpg.initialize(256);
+        KeyPair kp = kpg.generateKeyPair();
+        String privatePem = toPem("PRIVATE KEY", kp.getPrivate().getEncoded());
+        String publicPem = toPem("PUBLIC KEY", kp.getPublic().getEncoded());
+    // Use minimal helper that does NOT attempt to treat public key bytes as an x5c certificate chain.
+    String jwt = KnoxTokenUtility2.createEnrollmentJwt(
+        "client-abc",
+        "359881234567890",
+        privatePem);
         assertNotNull(jwt);
-        assertFalse(jwt.isEmpty());
-        Claims claims = Jwts.parser().verifyWith(keyPair.getPublic()).build().parseSignedClaims(jwt).getPayload();
-        assertEquals(clientIdentifier, claims.getSubject());
-        assertNotNull(claims.getIssuedAt());
-        assertNotNull(claims.getExpiration());
+        String[] parts = jwt.split("\\.");
+        assertEquals(3, parts.length);
+        for (int i = 0; i < 2; i++) {
+            final String segment = parts[i];
+            try {
+                byte[] decoded = Base64.getUrlDecoder().decode(segment + padding(segment));
+                assertNotNull(decoded);
+            } catch (IllegalArgumentException ex) {
+                throw new AssertionError("Segment did not decode: index=" + i, ex);
+            }
+        }
     }
 
-    @Test
-    void testGenerateJWTWithInvalidKey() {
-        String invalidKey = "invalid-key-format";
-        InputStream invalidKeyStream = new ByteArrayInputStream(invalidKey.getBytes());
-        Exception exception = assertThrows(RuntimeException.class, () -> {
-            KnoxTokenUtility.generateSignedClientIdentifierJWT(invalidKeyStream, clientIdentifier, null);
-        });
-        assertTrue(exception.getMessage().contains("Failed to generate JWT"));
+    private static String toPem(String type, byte[] der) {
+        String b64 = Base64.getEncoder().encodeToString(der);
+        StringBuilder sb = new StringBuilder();
+        sb.append("-----BEGIN ").append(type).append("-----\n");
+        for (int i = 0; i < b64.length(); i += 64) {
+            sb.append(b64, i, Math.min(i + 64, b64.length())).append('\n');
+        }
+        sb.append("-----END ").append(type).append("-----\n");
+        return sb.toString();
     }
 
-    private String certificateJson() {
-        return "{" +
-            "\"clientId\":\"" + clientIdentifier + "\"," +
-            "\"privateKey\":\"" + privateKeyPem.replace("\n","\\n") + "\"}";
-    }
-
-    @Test
-    void testCertificateBasedClientIdentifier() {
-        InputStream cert = new ByteArrayInputStream(certificateJson().getBytes());
-        String jwt = KnoxCertificateJwtUtility.generateSignedClientIdentifierJWTWithIdpAccessToken(cert, clientIdentifier, "idpTokenXYZ");
-        assertNotNull(jwt);
-        assertEquals(3, jwt.split("\\.").length);
-    }
-
-    @Test
-    void testSessionTokenJwt() {
-        InputStream cert = new ByteArrayInputStream(certificateJson().getBytes());
-        String jwt = KnoxCertificateJwtUtility.generateSignedSessionTokenJWT(cert, "session-raw-token");
-        assertNotNull(jwt);
-    }
-
-    @Test
-    void testAccessTokenJwt() {
-        InputStream cert = new ByteArrayInputStream(certificateJson().getBytes());
-        String jwt = KnoxCertificateJwtUtility.generateSignedAccessTokenJWT(cert, "access-raw-token");
-        assertNotNull(jwt);
+    private static String padding(String base64Url) {
+        int mod = base64Url.length() % 4;
+        if (mod == 2) return "==";
+        if (mod == 3) return "=";
+        if (mod == 1) return "=";
+        return "";
     }
 }

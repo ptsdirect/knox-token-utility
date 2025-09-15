@@ -1,0 +1,111 @@
+{
+  "info": {
+    "name": "Knox Token Utility",
+    "_postman_id": "b5b4c6c1-1a90-4e1b-9b2d-dc5b99f07e11",
+    "description": "Postman collection for Knox Guard token lifecycle using the knox-token-utility project.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Request Access Token",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Accept", "value": "application/json" },
+          { "key": "X-SES-JWT", "value": "{{clientIdentifierJwt}}" },
+          { "key": "X-KNOX-API-VERSION", "value": "{{apiVersion}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/ses/token",
+          "host": ["{{baseUrl}}"],
+          "path": ["ses", "token"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"base64EncodedStringPublicKey\": \"{{publicKeyBase64}}\",\n  \"validityForAccessTokenInMinutes\": {{accessTokenValidity}}\n}"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Refresh Access Token",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "X-KNOX-API-VERSION", "value": "{{apiVersion}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/ses/token/refresh",
+          "host": ["{{baseUrl}}"],
+          "path": ["ses", "token", "refresh"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"base64EncodedStringPublicKey\": \"{{publicKeyBase64}}\",\n  \"refreshToken\": \"{{refreshToken}}\",\n  \"validityForAccessTokenInMinutes\": {{accessTokenValidity}}\n}"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Validate Access Token",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+          { "key": "X-KNOX-API-VERSION", "value": "{{apiVersion}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/ses/token/validate",
+          "host": ["{{baseUrl}}"],
+          "path": ["ses", "token", "validate"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Enroll Device",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+          { "key": "X-KNOX-API-VERSION", "value": "{{apiVersion}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/kguard/devices",
+          "host": ["{{baseUrl}}"],
+          "path": ["kguard", "devices"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"deviceId\": \"{{deviceImei}}\",\n  \"clientId\": \"{{clientId}}\",\n  \"platform\": \"android\"\n}"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Local Demo: /api/token",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": {
+          "raw": "http://localhost:{{localPort}}/api/token",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "{{localPort}}",
+          "path": ["api", "token"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"clientId\": \"{{clientId}}\",\n  \"deviceImei\": \"{{deviceImei}}\"\n}"
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": []
+}

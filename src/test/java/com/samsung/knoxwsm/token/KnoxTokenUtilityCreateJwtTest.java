@@ -38,7 +38,7 @@ class KnoxTokenUtilityCreateJwtTest {
         String privatePem = "-----BEGIN PRIVATE KEY-----\n" + Base64.getEncoder().encodeToString(kp.getPrivate().getEncoded()) + "\n-----END PRIVATE KEY-----\n";
         String publicBase64 = Base64.getEncoder().encodeToString(kp.getPublic().getEncoded());
         RuntimeException ex = assertThrows(RuntimeException.class, () ->
-            KnoxTokenUtility.createSignedJWT("client-xyz", "359881234567890", publicBase64, new ByteArrayInputStream(privatePem.getBytes()))
+            KnoxTokenUtility2.createSignedJWT("client-xyz", "359881234567890", publicBase64, new ByteArrayInputStream(privatePem.getBytes()))
         );
         assertTrue(ex.getMessage().contains("Failed to create JWT"));
     }

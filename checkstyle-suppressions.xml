@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC
+    "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+    "https://checkstyle.org/dtds/suppressions_1_2.dtd">
+<suppressions>
+    <!-- Allow all-caps domain abbreviations in method names for JWT related methods -->
+    <suppress checks="AbbreviationAsWordInName" files="KnoxTokenUtility.java" />
+    <suppress checks="AbbreviationAsWordInName" files="CertificateJwtUtility.java" />
+    <!-- Permit record component snake_case in Certificate.java (JSON binding compatibility) -->
+    <suppress checks="RecordComponentName" files="Certificate.java" />
+    <!-- Temporarily suppress line length until refactor complete -->
+    <suppress checks="LineLength" files="KnoxTokenUtility.java" />
+    <suppress checks="LineLength" files="CertificateJwtUtility.java" />
+    <suppress checks="LineLength" files="Certificate.java" />
+</suppressions>

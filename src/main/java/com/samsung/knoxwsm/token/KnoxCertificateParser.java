@@ -51,7 +51,7 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 
 /**
- * Parser for the flexible certificate.json structure. Loads in-memory private & public key objects.
+ * Parser for the flexible {@code certificate.json} structure. Loads in-memory private &amp; public key objects.
  */
 public final class KnoxCertificateParser {
     private static final ObjectMapper OM = new ObjectMapper()
