@@ -67,7 +67,7 @@ public class TokenClient {
                 );
 
                 System.out.println("\n=== Base64 Encoded Public Key ===\n");
-                System.out.println(publicKey);                // Get access token
+                System.out.println(publicKey);                // Get access token from primary domain
                 KnoxAuthClient authClient = new KnoxAuthClient();
                 Map<String, Object> tokenResponse = authClient.requestAccessToken(
                     publicKey,
@@ -76,8 +76,38 @@ public class TokenClient {
                 );
 
                 String accessToken = (String) tokenResponse.get("accessToken");
-                System.out.println("\n=== Access Token ===\n");
+                System.out.println("\n=== Access Token (Primary Domain) ===\n");
                 System.out.println(accessToken);
+
+                // Demonstrate secondary trust domain usage
+                try {
+                    Map<String, Object> secondaryTokenResponse = authClient.requestAccessTokenFromSecondaryDomain(
+                        publicKey,
+                        jwt,
+                        30
+                    );
+                    String secondaryAccessToken = (String) secondaryTokenResponse.get("accessToken");
+                    System.out.println("\n=== Access Token (Secondary Domain - trust.mdttee.com) ===\n");
+                    System.out.println(secondaryAccessToken);
+                } catch (Exception e) {
+                    System.out.println("\n=== Secondary Domain Not Available (Expected in Demo) ===");
+                    System.out.println("Secondary domain (trust.mdttee.com) not reachable: " + e.getMessage());
+                }
+
+                // Show trust domain configuration
+                TrustDomainConfig trustConfig = authClient.getTrustConfig();
+                System.out.println("\n=== Trust Domain Configuration ===");
+                System.out.println("Primary Domain: " + trustConfig.getPrimaryTrustDomain());
+                System.out.println("Secondary Domain: " + trustConfig.getSecondaryTrustDomain());
+                System.out.println("Artifact Metadata: " + trustConfig.getArtifactMetadata());
+                
+                // Parse and display artifact metadata
+                TrustDomainConfig.ArtifactMetadata metadata = trustConfig.parseArtifactMetadata();
+                System.out.println("\n=== Parsed Artifact Metadata ===");
+                System.out.println("Artifact: " + metadata.getArtifact());
+                System.out.println("Signature: " + metadata.getSignature());
+                System.out.println("SBOM Formats: " + metadata.getSbomFormats());
+                System.out.println("Provenance: " + metadata.getProvenance());
 
                 // Enroll device in Knox Guard
                 Map<String, Object> enrollmentResponse = authClient.enrollDeviceInKnoxGuard(

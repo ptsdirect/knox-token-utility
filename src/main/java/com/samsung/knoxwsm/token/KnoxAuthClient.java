@@ -50,7 +50,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Client for interacting with the Samsung Knox Cloud Authentication API.
+ * Client for interacting with the Samsung Knox Cloud Authentication API and trusted domains.
  */
 public class KnoxAuthClient {
     // Default production endpoint (may already contain the version segment)
@@ -58,6 +58,7 @@ public class KnoxAuthClient {
     // Desired API version (header + path injection only if not already present in base URL)
     protected static final String API_VERSION = System.getenv().getOrDefault("KNOX_API_VERSION", "v1");
     private final String apiBaseUrl;
+    private final TrustDomainConfig trustConfig;
     // Build full URL ensuring we don't duplicate version segment when apiBaseUrl already ends with /vX or /vX.Y
     private String buildUrl(String relativePath) {
         String base = apiBaseUrl;
@@ -73,10 +74,15 @@ public class KnoxAuthClient {
     private final ObjectMapper mapper;
 
     public KnoxAuthClient() {
-        this(System.getenv().getOrDefault("KNOX_API_BASE_URL", DEFAULT_API_BASE_URL));
+        this(System.getenv().getOrDefault("KNOX_API_BASE_URL", DEFAULT_API_BASE_URL), 
+             TrustDomainConfig.createDefault());
     }
 
     public KnoxAuthClient(String apiBaseUrl) {
+        this(apiBaseUrl, TrustDomainConfig.createDefault());
+    }
+    
+    public KnoxAuthClient(String apiBaseUrl, TrustDomainConfig trustConfig) {
         this.client = new OkHttpClient.Builder()
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
@@ -85,6 +91,7 @@ public class KnoxAuthClient {
         this.mapper = new ObjectMapper();
         // normalize remove trailing slash
         this.apiBaseUrl = apiBaseUrl.replaceAll("/+$$", "");
+        this.trustConfig = trustConfig != null ? trustConfig : TrustDomainConfig.createDefault();
     }
 
     /**
@@ -116,6 +123,7 @@ public class KnoxAuthClient {
             .header("Accept", "application/json")
             .header("X-SES-JWT", clientIdentifierJwt)
             .header("X-KNOX-API-VERSION", API_VERSION)
+            .header("X-Artifact-Metadata", trustConfig.getArtifactMetadata())
             .post(RequestBody.create(requestBody, JSON))
             .build();
 
@@ -160,6 +168,7 @@ public class KnoxAuthClient {
         Request request = new Request.Builder()
             .url(buildUrl("/ses/token/refresh"))
             .header("X-KNOX-API-VERSION", API_VERSION)
+            .header("X-Artifact-Metadata", trustConfig.getArtifactMetadata())
             .post(RequestBody.create(requestBody, JSON))
             .build();
 
@@ -186,6 +195,7 @@ public class KnoxAuthClient {
             .url(buildUrl("/ses/token/validate"))
             .header("Authorization", "Bearer " + accessToken)
             .header("X-KNOX-API-VERSION", API_VERSION)
+            .header("X-Artifact-Metadata", trustConfig.getArtifactMetadata())
             .get()
             .build();
 
@@ -224,6 +234,7 @@ public class KnoxAuthClient {
             .url(buildUrl("/kguard/devices"))
             .header("Authorization", "Bearer " + accessToken)
             .header("X-KNOX-API-VERSION", API_VERSION)
+            .header("X-Artifact-Metadata", trustConfig.getArtifactMetadata())
             .post(RequestBody.create(requestBody, JSON))
             .build();
 
@@ -265,6 +276,45 @@ public class KnoxAuthClient {
             }
         }
         return new KnoxApiException(code, body, suggestion);
+    }
+
+    /**
+     * Get the configured trust domains.
+     */
+    public TrustDomainConfig getTrustConfig() {
+        return trustConfig;
+    }
+    
+    /**
+     * Validate if a URL belongs to a trusted domain.
+     */
+    public boolean isTrustedUrl(String url) {
+        return trustConfig.isTrustedDomain(url);
+    }
+    
+    /**
+     * Get artifact metadata for the secondary trust domain.
+     */
+    public String getArtifactMetadata() {
+        return trustConfig.getArtifactMetadata();
+    }
+    
+    /**
+     * Request an access token from the secondary trust domain (trust.mdttee.com).
+     */
+    public Map<String, Object> requestAccessTokenFromSecondaryDomain(
+            String publicKey, 
+            String clientIdentifierJwt,
+            int validityMinutes
+    ) throws IOException {
+        String secondaryDomain = trustConfig.getSecondaryTrustDomain();
+        if (secondaryDomain == null) {
+            throw new IllegalStateException("No secondary trust domain configured");
+        }
+        
+        // Create a temporary client for the secondary domain
+        KnoxAuthClient secondaryClient = new KnoxAuthClient(secondaryDomain + "/kcs/v1", trustConfig);
+        return secondaryClient.requestAccessToken(publicKey, clientIdentifierJwt, validityMinutes);
     }
 
 }

@@ -16,6 +16,8 @@ Apache 2.0 licensed CLI + library for Samsung Knox Guard token flows: ES256 JWT 
 | Keys | EC P-256 PKCS#8 private key parsing; public key export (Base64 DER) |
 | Certificate | `certificate.json` flexible field parser + consolidated signing methods |
 | HTTP | Access, refresh, validate, enroll (OkHttp + Jackson) |
+| Trust Domains | Multiple domain support (Samsung Knox + trust.mdttee.com) |
+| Artifact Metadata | GPG signatures, SBOM (CycloneDX/SPDX), SLSA provenance |
 | Crypto | RSA small-payload encryption utility |
 | Versioning | `X-KNOX-API-VERSION` header + path normalization groundwork |
 | Quality | JaCoCo thresholds, SpotBugs, Checkstyle, License plugin |
@@ -76,6 +78,14 @@ try (InputStream pk = Files.newInputStream(Path.of("private_key.pem"))) {
 
 ## Environment (.env Supported)
 `KNOX_BASE_URL`, `KNOX_CLIENT_ID`, `KNOX_CLIENT_PASSWORD`, `KNOX_API_VERSION`, etc. Quotes are stripped; values cached after first read.
+
+### Trust Domain Configuration
+Support for multiple trust domains and artifact metadata. See `docs/TRUST_DOMAINS.md` for details.
+
+Environment variables:
+- `KNOX_API_BASE_URL`: Primary Knox API URL
+- `KNOX_SECONDARY_TRUST_DOMAIN`: Secondary trust domain (trust.mdttee.com)
+- `KNOX_ARTIFACT_METADATA`: Artifact metadata (artifact=com.mdttee.knox:pts;sig=GPG;sbom=cyclonedx,spdx;prov=slsa)
 
 ## Security
 - Keep private keys & certificate JSON out of VCS.

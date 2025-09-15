@@ -92,4 +92,19 @@ public final class Config {
         if (raw == null) return defaultValue;
         try { return Long.parseLong(raw); } catch (NumberFormatException e) { return defaultValue; }
     }
+    
+    /**
+     * Get trust domain configuration from environment variables.
+     */
+    public static TrustDomainConfig getTrustDomainConfig() {
+        String primaryDomain = get("KNOX_API_BASE_URL", "https://api.samsungknox.com");
+        String secondaryDomain = get("KNOX_SECONDARY_TRUST_DOMAIN", "https://trust.mdttee.com");
+        String artifactMetadata = get("KNOX_ARTIFACT_METADATA", 
+            "artifact=com.mdttee.knox:pts;sig=GPG;sbom=cyclonedx,spdx;prov=slsa");
+        
+        return TrustDomainConfig.create(
+            java.util.List.of(primaryDomain, secondaryDomain),
+            artifactMetadata
+        );
+    }
 }
