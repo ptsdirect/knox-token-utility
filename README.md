@@ -214,6 +214,12 @@ curl -s https://example.org/.well-known/openpgp-fingerprint
 
 Always compare at least two independent sources (e.g., DNS + release asset).
 
+DNSSEC (if domain signed):
+```bash
+dig +dnssec TXT _openpgpkey.example.org | grep -i ad
+./scripts/verify-fingerprint-dns.sh _openpgpkey.example.org <FPR>
+```
+
 ## Publishing / Releasing
 Two approaches:
 

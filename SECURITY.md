@@ -92,3 +92,32 @@ A Grype-based scan runs in CI (non-fatal). We may tighten policy over time (e.g.
 
 ## Contact
 security@example.org (placeholder — replace with project security contact)
+
+## DNSSEC Considerations
+Publishing the fingerprint via DNS gains additional authenticity when the domain is DNSSEC-signed and the resolver validates signatures.
+
+### Verification Flow
+1. Query TXT record with DNSSEC:
+```bash
+dig +dnssec TXT _openpgpkey.example.org
+```
+2. Ensure the flags line includes `ad` (Authenticated Data). Absence of `ad` may mean your resolver doesn’t validate DNSSEC.
+3. (Optional) Use `delv` for end-to-end validation bypassing the stub resolver:
+```bash
+delv _openpgpkey.example.org TXT
+```
+4. Compare extracted `fpr=` value with release `KEY_FINGERPRINT` and repository copies.
+
+### Automated Check
+The helper script:
+```bash
+./scripts/verify-fingerprint-dns.sh _openpgpkey.example.org ABCDEF1234567890ABCDEF1234567890ABCDEF12
+```
+Returns non-zero exit if fingerprint mismatches or missing.
+
+### Threat Model Notes
+| Risk | Mitigation |
+|------|------------|
+| Resolver tampering | DNSSEC AD flag + independent `delv` query |
+| Single-channel compromise | Cross-validate (DNS + release asset + repo + well-known) |
+| Key rotation confusion | Publish new + old for overlap, add `validFrom` in SECURITY.md |
