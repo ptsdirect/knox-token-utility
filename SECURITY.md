@@ -1,0 +1,65 @@
+# Security Policy
+
+## Supported Versions
+We currently support the latest released minor version. Patch releases should be used for any security-related fixes.
+
+## Reporting a Vulnerability
+Please **do not** open a public issue for sensitive security reports.
+
+1. Email: security@example.org (replace with real contact)
+2. Provide:
+   - Affected version (tag / commit)
+   - Reproduction steps or PoC
+   - Impact assessment (confidentiality/integrity/availability)
+3. You should receive acknowledgement within 3 business days.
+
+If no response in 7 days, you may escalate by opening a minimal public issue referencing an unanswered security email.
+
+## Coordinated Disclosure
+We follow a 90-day coordinated disclosure window unless actively exploited in the wild, in which case we may accelerate release.
+
+## Artifact Integrity & Verification
+Each release provides multiple integrity layers:
+
+| Mechanism | Purpose |
+|-----------|---------|
+| SHA256SUMS | Basic checksum of fat JAR |
+| GPG Signatures (`*.asc`) | Authenticity of SBOMs (and optionally JAR if added later) |
+| Cosign Signatures (`*.sig`) | Keyless OIDC-backed signatures for JAR & SBOMs |
+| SLSA Build Provenance | Verifiable build metadata linking source commit to artifact |
+
+### GPG Verification
+```bash
+gpg --keyserver hkps://keys.openpgp.org --recv-keys <MAINTAINER_KEYID>
+gpg --verify sbom.json.asc sbom.json
+```
+
+### Cosign Verification (Keyless)
+```bash
+cosign verify-blob \
+  --signature sbom.json.sig \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+  --certificate-identity-regexp ".*" sbom.json
+```
+
+## SBOM & License Policy
+- CycloneDX + SPDX SBOMs generated during build.
+- CI runs a license policy check blocking (or warning on) forbidden licenses configured via `BANNED_LICENSES` variable.
+
+## Vulnerability Scanning
+A Grype-based scan runs in CI (non-fatal). We may tighten policy over time (e.g., fail on critical severities).
+
+## Cryptographic Practices
+- EC P-256 (ES256) for JWT signatures.
+- Detached signatures for SBOMs (GPG) and transparent keyless signatures (cosign) for higher supply chain trust.
+
+## Future Enhancements
+| Area | Planned Action |
+|------|----------------|
+| JAR GPG Sign | Add detached signature for fat JAR |
+| Sigstore Bundle | Include certificate + transparency bundle uploads |
+| VEX | Provide vulnerability status documents alongside SBOM |
+| Dependency Attestations | Add attestations for dependency freshness and license compliance |
+
+## Contact
+security@example.org (placeholder — replace with project security contact)

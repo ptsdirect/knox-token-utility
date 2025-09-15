@@ -148,6 +148,36 @@ gpg --verify sbom.json.asc sbom.json
 
 See `docs/SBOM.md` for details on dual-format rationale, signing, and future hardening (VEX, license policy, Sigstore).
 
+## Security Scanning & License Policy
+| Aspect | Implementation |
+|--------|---------------|
+| Vulnerability Scan | Grype (GitHub Action) generates SARIF (non-fatal) |
+| License Policy | `scripts/license_policy_check.sh` inspects CycloneDX + SPDX for banned IDs |
+| Forbidden Licenses (default) | `AGPL-3.0`, `SSPL-1.0` (override via `BANNED_LICENSES` env) |
+
+Run locally after build:
+```bash
+./scripts/license_policy_check.sh target/sbom.json
+```
+
+## Artifact Integrity & Verification
+| Layer | Tools |
+|-------|-------|
+| Checksums | `SHA256SUMS` |
+| GPG Signatures | `.asc` for SBOMs (conditional) |
+| Cosign Keyless | `.sig` for JAR + SBOMs (OIDC-backed) |
+| SLSA Provenance | GitHub provenance attestation |
+
+Quick cosign verification (after downloading artifacts):
+```bash
+cosign verify-blob \
+  --signature sbom.json.sig \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+  --certificate-identity-regexp ".*" sbom.json
+```
+
+See `SECURITY.md` and `scripts/verify-release.sh` for end-to-end verification workflow.
+
 ## Publishing / Releasing
 Two approaches:
 

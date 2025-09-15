@@ -109,6 +109,28 @@ To auto sign in workflow (future):
 (Requires imported private key & passphrase in secrets.)
 
 ## 11. Consuming the SBOM in CI
+### License Policy Check
+The CI workflow runs `scripts/license_policy_check.sh` against CycloneDX and (if present) SPDX outputs. Override default banned list:
+```bash
+BANNED_LICENSES="AGPL-3.0,SSPL-1.0,GPL-3.0-only" ./scripts/license_policy_check.sh target/sbom.json
+```
+
+### Cosign Keyless Signatures
+Release workflow uses GitHub OIDC to produce `.sig` files for JAR & SBOMs without managing long-lived keys.
+
+Verify (example for `sbom.json`):
+```bash
+cosign verify-blob \
+  --signature sbom.json.sig \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+  --certificate-identity-regexp ".*" sbom.json
+```
+
+### Combined Verification Script
+Run after downloading release artifacts:
+```bash
+./scripts/verify-release.sh v1.0.0 0xMAINTAINERKEY
+```
 Example: fail build if forbidden license appears:
 ```bash
 jq -e '.components[] | select(.licenses[]?.license.id == "AGPL-3.0")' target/sbom.json && {

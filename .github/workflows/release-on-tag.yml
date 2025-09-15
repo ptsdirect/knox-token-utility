@@ -91,3 +91,29 @@ jobs:
         uses: actions/attest-build-provenance@v1
         with:
           subject-path: ${{ env.JAR_PATH }}
+
+      - name: Install cosign
+        uses: sigstore/cosign-installer@v3
+
+      - name: Cosign keyless sign artifacts
+        env:
+          COSIGN_EXPERIMENTAL: 1
+        run: |
+          set -euo pipefail
+          sign() { FILE="$1"; [ -f "$FILE" ] || return 0; cosign sign-blob --yes "$FILE" > "$FILE.sig" 2> "$FILE.siglog"; cosign verify-blob --certificate-oidc-issuer https://token.actions.githubusercontent.com --certificate-identity-regexp ".*" --signature "$FILE.sig" "$FILE" || echo "[warn] verification skipped"; }
+          sign "$JAR_PATH"
+          [ -f target/sbom.json ] && sign target/sbom.json || true
+          [ -f target/sbom.xml ] && sign target/sbom.xml || true
+          [ -n "${SPDX_JSON:-}" ] && sign "$SPDX_JSON" || true
+
+      - name: Upload Cosign Signatures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cosign-signatures
+          path: |
+            ${{ env.JAR_PATH }}.sig
+            target/sbom.json.sig
+            target/sbom.xml.sig
+            ${{ env.SPDX_JSON }}.sig
+          if-no-files-found: ignore

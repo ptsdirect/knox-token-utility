@@ -30,6 +30,29 @@ jobs:
       - name: Verify
         run: mvn -B -ntp clean verify
 
+      - name: License Policy Check
+        run: |
+          ./scripts/license_policy_check.sh target/sbom.json || true
+        env:
+          BANNED_LICENSES: AGPL-3.0,SSPL-1.0
+
+      - name: Vulnerability Scan (Grype)
+        uses: anchore/scan-action@v3
+        continue-on-error: true
+        with:
+          path: .
+          fail-build: false
+          output-format: sarif
+          severity-cutoff: medium
+
+      - name: Upload Vulnerability Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vulnerability-scan
+          path: grype.sarif
+          if-no-files-found: ignore
+
       - name: Upload SBOM
         if: always()
         uses: actions/upload-artifact@v4
