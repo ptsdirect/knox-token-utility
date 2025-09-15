@@ -22,6 +22,7 @@ package com.samsung.knoxwsm.token;
 
 import com.samsung.knoxwsm.token.KnoxTokenUtility;
 import com.samsung.knoxwsm.token.KnoxAuthClient;
+import com.samsung.knoxwsm.token.MavenDnsResolver;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -39,6 +40,38 @@ public class TokenClient {
 
     public static void main(String[] args) {
         try {
+            // Check for command line arguments
+            if (args.length > 0) {
+                if ("--resolve-maven".equals(args[0]) && args.length > 1) {
+                    resolveMavenFromDns(args[1]);
+                    return;
+                } else if ("--help".equals(args[0])) {
+                    printUsage();
+                    return;
+                }
+            }
+            
+            // Demonstrate DNS TXT record resolution for Maven artifacts
+            System.out.println("=== Maven DNS Resolver Demo ===\n");
+            MavenDnsResolver dnsResolver = new MavenDnsResolver();
+            
+            // Example of resolving pts._maven TXT record
+            String mavenHostname = "pts._maven.example.com"; // This would be the actual hostname
+            System.out.printf("Attempting to resolve Maven artifact from DNS TXT record: %s\n", mavenHostname);
+            
+            MavenDnsResolver.MavenArtifact artifact = dnsResolver.resolveMavenArtifact(mavenHostname);
+            if (artifact != null) {
+                System.out.printf("Successfully resolved Maven artifact:\n");
+                System.out.printf("  Group ID: %s\n", artifact.getGroupId());
+                System.out.printf("  Artifact ID: %s\n", artifact.getArtifactId());
+                System.out.printf("  Repository: %s\n", artifact.getRepository());
+                System.out.printf("  Signature: %s\n", artifact.getSignature());
+            } else {
+                System.out.printf("Could not resolve Maven artifact from DNS (expected for demo)\n");
+            }
+            
+            System.out.println("\n=== Knox Guard Token Utility Demo ===\n");
+            
             // First, let's generate a test key pair if it doesn't exist
             Path privateKeyPath = Paths.get("private_key.pem");
             Path publicKeyPath = Paths.get("public_key.pem");
@@ -95,6 +128,54 @@ public class TokenClient {
             System.err.println("Error: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+    
+    /**
+     * Resolves Maven artifact information from DNS TXT record.
+     * Usage: java -jar knox-token-utility.jar --resolve-maven pts._maven.example.com
+     */
+    public static void resolveMavenFromDns(String hostname) {
+        System.out.printf("Resolving Maven artifact from DNS TXT record: %s\n", hostname);
+        
+        MavenDnsResolver resolver = new MavenDnsResolver();
+        MavenDnsResolver.MavenArtifact artifact = resolver.resolveMavenArtifact(hostname);
+        
+        if (artifact != null) {
+            System.out.println("Maven artifact resolved successfully:");
+            System.out.printf("  Group ID: %s\n", artifact.getGroupId());
+            System.out.printf("  Artifact ID: %s\n", artifact.getArtifactId());
+            System.out.printf("  Repository: %s\n", artifact.getRepository() != null ? artifact.getRepository() : "N/A");
+            System.out.printf("  Signature: %s\n", artifact.getSignature() != null ? artifact.getSignature() : "N/A");
+            
+            // Example of how this could be used to construct Maven coordinates
+            String mavenCoordinates = String.format("%s:%s", artifact.getGroupId(), artifact.getArtifactId());
+            System.out.printf("  Maven coordinates: %s\n", mavenCoordinates);
+        } else {
+            System.err.println("Failed to resolve Maven artifact from DNS TXT record");
+            System.exit(1);
+        }
+    }
+    
+    /**
+     * Prints usage information for the Knox Token Utility.
+     */
+    public static void printUsage() {
+        System.out.println("Knox Token Utility - Usage:");
+        System.out.println();
+        System.out.println("  Default mode (no arguments):");
+        System.out.println("    java -jar knox-token-utility.jar");
+        System.out.println("    Runs the full Knox Guard token demo");
+        System.out.println();
+        System.out.println("  Resolve Maven artifact from DNS TXT record:");
+        System.out.println("    java -jar knox-token-utility.jar --resolve-maven <hostname>");
+        System.out.println("    Example: java -jar knox-token-utility.jar --resolve-maven pts._maven.example.com");
+        System.out.println();
+        System.out.println("  Help:");
+        System.out.println("    java -jar knox-token-utility.jar --help");
+        System.out.println();
+        System.out.println("  DNS TXT Record Format:");
+        System.out.println("    groupid=com.mdttee.knox;artifactid=pts;repo=central;sig=gg");
+        System.out.println();
     }
 
     public static void generateKeyPair(Path privateKeyPath, Path publicKeyPath) throws Exception {
