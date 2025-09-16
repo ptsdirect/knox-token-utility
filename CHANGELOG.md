@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. This project adheres to Semantic Versioning.
 
+## [1.0.3] - 2025-09-16
+### Fixed
+- Publish workflow now passes the actual `GPG_PASSPHRASE` secret to setup-java and Maven, enabling non-interactive artifact signing in CI.
+- Maven settings template switched to use `OSSRH_TOKEN` for token-based auth.
+- Confirmed `maven-gpg-plugin` loopback pinentry and `useAgent=false` to avoid interactive pinentry.
+
+### Changed
+- POM version set to `1.0.3` for a clean re-tag and deploy to Maven Central after CI fixes.
+
+---
+
 ## [1.0.1] - 2025-09-16
 ### Added
 - Reseller identifier (`resellerId`) optional claim support across CLI & programmatic JWT creation.

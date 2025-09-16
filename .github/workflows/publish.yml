@@ -27,7 +27,8 @@ jobs:
             server-username: OSSRH_USERNAME
             server-password: OSSRH_TOKEN
             gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
-            gpg-passphrase: GPG_PASSPHRASE
+            # Pass the actual passphrase value, not the env var name
+            gpg-passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
       - name: Verify (no deploy) if snapshot
         if: contains(github.ref, '-SNAPSHOT')
