@@ -103,3 +103,10 @@ jobs:
           files: target/site/jacoco/jacoco.xml
           flags: unittests
           fail_ci_if_error: false
+
+      - name: Deployment Check
+        if: always()
+        run: |
+          chmod +x scripts/check-deploy.sh
+          ./scripts/check-deploy.sh --local --skip-server
+        continue-on-error: true
