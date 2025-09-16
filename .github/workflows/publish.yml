@@ -22,9 +22,10 @@ jobs:
             distribution: temurin
             java-version: '21'
             cache: 'maven'
-            server-id: central
-            server-username: MAVEN_CENTRAL_USERNAME
-            server-password: MAVEN_CENTRAL_TOKEN
+            # Configure credentials for OSSRH (Sonatype s01) to match POM serverId
+            server-id: ossrh
+            server-username: OSSRH_USERNAME
+            server-password: OSSRH_TOKEN
             gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
             gpg-passphrase: GPG_PASSPHRASE
 
@@ -32,12 +33,30 @@ jobs:
         if: contains(github.ref, '-SNAPSHOT')
         run: mvn -B -ntp clean verify -Dgpg.skip=false
 
-      - name: Deploy Release
+      - name: Deploy Release to OSSRH Staging
         if: startsWith(github.ref, 'refs/tags/v')
-        run: mvn -B -ntp clean deploy -DskipTests=false -Prelease
+        run: mvn -B -ntp clean deploy -DskipTests=false -Dgpg.skip=false -Prelease
         env:
-          MAVEN_CENTRAL_USERNAME: _
-          MAVEN_CENTRAL_TOKEN: ${{ secrets.MAVEN_CENTRAL_TOKEN }}
+          # Consumed by setup-java to write settings.xml for server-id=ossrh
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
+          # Used by maven-gpg-plugin
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+
+      - name: Close Staging Repository
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: mvn -B -ntp nexus-staging:rc-close -Prelease -DstagingDescription="Release ${{ github.ref_name }}"
+        env:
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+
+      - name: Release Staging Repository
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: mvn -B -ntp nexus-staging:rc-release -Prelease
+        env:
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
 
       - name: Show Built Artifacts
