@@ -181,7 +181,8 @@
                                 <arg>--pinentry-mode</arg>
                                 <arg>loopback</arg>
                             </gpgArguments>
-                            <useAgent>true</useAgent>
+                            <!-- Disable gpg-agent to prevent interactive pinentry; rely on loopback + passphrase. -->
+                            <useAgent>false</useAgent>
                             <keyname>F441AE754B789530979EA4FF5007EB5FEF8D08C1</keyname>
                             <executable>gpg</executable>
                             <passphrase>${gpg.passphrase}</passphrase>

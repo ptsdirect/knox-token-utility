@@ -7,7 +7,7 @@
     <server>
       <id>ossrh</id>
       <username>${env.OSSRH_USERNAME}</username>
-      <password>${env.OSSRH_PASSWORD}</password>
+      <password>${env.OSSRH_TOKEN}</password>
     </server>
   </servers>
   <profiles>
