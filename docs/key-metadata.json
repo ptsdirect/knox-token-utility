@@ -1,25 +1,35 @@
 {
-  "version": 1,
-  "current": {
-    "fingerprint": "<CURRENT_FPR>",
-    "created": "<ISO8601_CREATED>",
-    "expires": null,
-    "algorithm": "ed25519|rsa4096|p256",
-    "usage": ["signing"],
-    "revoked": false
-  },
-  "previous": [
-    {
-      "fingerprint": "<OLD_FPR_PLACEHOLDER>",
-      "retired": "<ISO8601_RETIRED>",
-      "supersededBy": "<CURRENT_FPR>",
-      "overlapUntil": "<ISO8601_OVERLAP_END>",
-      "revoked": false
+  "schemaVersion": 2,
+  "lastUpdated": "2025-09-16T15:00:00Z",
+  "currentSigningKey": {
+    "fingerprint": "F441AE754B789530979EA4FF5007EB5FEF8D08C1",
+    "algorithm": "rsa4096",
+    "created": "2025-09-16T00:00:00Z",
+    "validFrom": "2025-09-16T00:00:00Z",
+    "validUntil": "2027-09-16T00:00:00Z",
+    "usage": ["artifact-signing", "sbom-signing"],
+    "publication": {
+      "releaseAsset": true,
+      "dnsTxt": false,
+      "wellKnown": false,
+      "publicKeyServer": "keys.openpgp.org"
     }
-  ],
+  },
+  "previousKeys": [],
   "policy": {
-    "rotationIntervalDays": 365,
+    "plannedRotation": "2026-09-01T00:00:00Z",
+    "rotationIntervalDays": 730,
     "overlapDays": 30,
-    "revocationOnCompromise": true
-  }
+    "emergencyRotationHours": 4
+  },
+  "compromiseProcedures": {
+    "publishAdvisory": "Create SECURITY.md hotfix section + GitHub advisory",
+    "signRevocation": true,
+    "revokeOldWithinHours": 24
+  },
+  "integrity": {
+    "hashOfPublicKeyAsc": null,
+    "hashAlgorithm": "SHA256"
+  },
+  "notes": "Add DNS TXT and optional /.well-known hosting then set publication.dnsTxt/wellKnown true. Update hashOfPublicKeyAsc after publishing public-key.asc as release asset."
 }
