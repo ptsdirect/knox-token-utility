@@ -17,6 +17,8 @@ A concise, high-signal index for everything you can do with the Knox Guard Token
 | Full build & quality | `mvn -ntp clean verify` | Fat JAR + SBOM + reports |
 | Fast build | `mvn -Pfast -Dfast -ntp package` | Fat JAR (no checks) |
 | Low-space build | `mvn -Plowspace -Dlowspace clean verify` | Slim coverage reports |
+| Deployment verification | `[SCRIPT] ./scripts/check-deploy.sh --local` | Build + CLI + server health check |
+| Release verification | `[SCRIPT] ./scripts/check-deploy.sh --version v1.0.0` | GitHub release artifact validation |
 
 Artifact: `target/pts-*-jar-with-dependencies.jar`
 
