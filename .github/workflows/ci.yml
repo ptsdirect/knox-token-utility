@@ -28,7 +28,7 @@ jobs:
             cache: 'maven'
 
       - name: Verify
-        run: mvn -B -ntp clean verify
+        run: mvn -B -ntp clean verify -Dgpg.skip=true
 
       - name: License Policy Check
         run: |

@@ -40,6 +40,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <main.class>com.samsung.knoxwsm.token.Launcher</main.class>
         <checkstyle.suppressions.file>${project.basedir}/checkstyle-suppressions.xml</checkstyle.suppressions.file>
+        <!-- GPG signing disabled by default; enable with -Prelease profile for Maven Central deployment -->
+        <gpg.skip>true</gpg.skip>
     </properties>
 
     <dependencies>
