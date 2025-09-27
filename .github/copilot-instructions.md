@@ -30,6 +30,17 @@ mvn -Plowspace -Dlowspace verify
 
 **Never ship artifacts built with `-Pfast`** - this skips security scans and coverage.
 
+### GPG Signing Configuration
+GPG signing is **disabled by default** (`<gpg.skip>true</gpg.skip>`) to prevent CI failures:
+```bash
+# Regular builds (CI/local) - GPG automatically skipped
+mvn clean verify
+
+# Release builds only - GPG signing enabled
+mvn -Prelease clean deploy
+```
+This prevents "No secret key" errors in CI environments while maintaining production signing capability.
+
 ### Environment Configuration Pattern
 Uses `Config.java` with cascading resolution: CLI args → env vars → defaults
 ```java
@@ -124,6 +135,7 @@ Structured key management in `docs/key-metadata.json`:
 - **Mixing Java crypto with Node.js scripts** - prefer Java `KnoxTokenUtility` for production
 - **CLI mode testing without scripts** - use `./scripts/run-cli.sh` wrapper
 - **Coverage failures on large files** - use `-Plowspace` for disk-constrained environments
+- **Enabling GPG in CI** - GPG signing is opt-in via `-Prelease` profile only; never force GPG in regular builds
 
 ### Directory Conventions
 - `src/main/java/com/samsung/knoxwsm/token/`: Core library classes
