@@ -1,5 +1,14 @@
 # Knox Token Utility - AI Assistant Guidelines
 
+## Prerequisites
+
+Before working on this project, ensure you have:
+- **Java 21** (JDK 21 or later required for building)
+- **Maven 3.9+** for dependency management and builds
+- **Node.js 18+** (optional, for legacy JWT generation scripts)
+- **Bash shell** for running automation scripts
+- **GPG** (optional, only for release signing with `-Prelease` profile)
+
 ## Architecture Overview
 
 This is a **dual-language** (Java 21 + Node.js) Knox Guard token lifecycle utility combining:
@@ -89,6 +98,21 @@ Knox APIs use region-specific hosts. The utility handles this via:
 
 ## Testing & Quality Patterns
 
+### Running Tests
+```bash
+# Run all tests with coverage
+mvn clean test
+
+# Run all tests with full verification (includes SpotBugs, Checkstyle)
+mvn clean verify
+
+# Run specific test class
+mvn test -Dtest=KnoxTokenUtilityTest
+
+# Run tests with coverage report (generates target/site/jacoco/index.html)
+mvn clean test jacoco:report
+```
+
 ### JaCoCo Coverage Targeting
 Coverage enforcement focuses **only on core crypto/config classes**, excluding CLI/network layers:
 ```xml
@@ -99,10 +123,19 @@ Coverage enforcement focuses **only on core crypto/config classes**, excluding C
 </includes>
 ```
 
+Minimum coverage threshold: 80% for core crypto/config classes.
+
 ### Test Structure  
 - `*Test.java`: Core unit tests with Mockito
 - `*UnlockTest.java`: Device operation workflow tests
 - `MockWebServer` usage: Tests HTTP clients without external dependencies
+
+### Quality Gates
+All code changes must pass:
+1. **JUnit tests** - All existing tests must pass
+2. **JaCoCo coverage** - 80%+ on core crypto/config classes
+3. **SpotBugs** - No high/medium priority bugs
+4. **Checkstyle** - Follows Google Java Style with suppressions in `checkstyle-suppressions.xml`
 
 ## Security & Compliance Patterns
 
@@ -142,6 +175,42 @@ Structured key management in `docs/key-metadata.json`:
 - `scripts/`: Production-ready bash automation (env-aware, dry-run capable)
 - `postman/`: API collection with environment template
 - `docs/`: Security metadata, key fingerprints, SBOM documentation
+
+## Coding Standards
+
+### Java Code Style
+- Follow **Google Java Style Guide** with project-specific suppressions
+- Use **Java 21 features** where appropriate (records, pattern matching, etc.)
+- Maximum line length: 100 characters
+- Indentation: 2 spaces (no tabs)
+- Always use braces for control structures
+
+### Code Quality Requirements
+- All public methods must have Javadoc comments
+- Use meaningful variable and method names
+- Prefer immutability - use `final` for variables that don't change
+- Handle exceptions appropriately - don't catch and ignore
+- Log important operations with appropriate log levels
+
+### Testing Requirements
+- Write unit tests for all new public methods
+- Use Mockito for mocking external dependencies
+- Test both success and failure cases
+- Use descriptive test method names following pattern: `methodName_scenario_expectedResult()`
+  - Note: Test method names use underscores for readability, which is an accepted exception to camelCase convention
+
+## Validation Checklist
+
+Before submitting changes, verify:
+- [ ] Code builds successfully: `mvn clean verify`
+- [ ] All tests pass: `mvn test`
+- [ ] Code coverage meets threshold (80%+ for core crypto/config classes)
+- [ ] No SpotBugs warnings: Check build output
+- [ ] Checkstyle passes: Check build output
+- [ ] License headers present on new files
+- [ ] SBOM generation succeeds: Check `target/sbom.json`
+- [ ] Documentation updated if API changed
+- [ ] Environment variables documented if new ones added
 
 ## Integration Points
 
