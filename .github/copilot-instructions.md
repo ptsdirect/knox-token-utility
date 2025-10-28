@@ -133,7 +133,7 @@ Minimum coverage threshold: 80% for core crypto/config classes.
 ### Quality Gates
 All code changes must pass:
 1. **JUnit tests** - All existing tests must pass
-2. **JaCoCo coverage** - 80%+ on core classes
+2. **JaCoCo coverage** - 80%+ on core crypto/config classes
 3. **SpotBugs** - No high/medium priority bugs
 4. **Checkstyle** - Follows Google Java Style with suppressions in `checkstyle-suppressions.xml`
 
@@ -197,13 +197,14 @@ Structured key management in `docs/key-metadata.json`:
 - Use Mockito for mocking external dependencies
 - Test both success and failure cases
 - Use descriptive test method names following pattern: `methodName_scenario_expectedResult()`
+  - Note: Test method names use underscores for readability, which is an accepted exception to camelCase convention
 
 ## Validation Checklist
 
 Before submitting changes, verify:
 - [ ] Code builds successfully: `mvn clean verify`
 - [ ] All tests pass: `mvn test`
-- [ ] Code coverage meets threshold (80%+ for core classes)
+- [ ] Code coverage meets threshold (80%+ for core crypto/config classes)
 - [ ] No SpotBugs warnings: Check build output
 - [ ] Checkstyle passes: Check build output
 - [ ] License headers present on new files
