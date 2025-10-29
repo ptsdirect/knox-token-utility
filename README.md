@@ -240,6 +240,45 @@ DEVICE_IMEI=359881234567890 CLIENT_ID=client-123 ACCESS_TOKEN=dummy DRY_RUN=1 ./
 ### Test Coverage Additions
 `KnoxAuthClientUnlockTest` exercises: standalone unlock success + error, combined enroll+unlock success, and unlock failure path. Total test suite now includes unlock path assertions ensuring regression detection.
 
+## Deployment Verification
+
+The project includes a comprehensive deployment check script that validates build artifacts, CLI functionality, server operation, and release integrity.
+
+### Local Deployment Check
+```bash
+# Full local deployment verification
+./scripts/check-deploy.sh --local
+
+# Skip server health check (for environments without network access)
+./scripts/check-deploy.sh --local --skip-server
+
+# Skip build verification (if already built)
+./scripts/check-deploy.sh --local --skip-build
+```
+
+### Release Verification
+```bash
+# Verify a specific GitHub release
+./scripts/check-deploy.sh --version v1.0.0 --release-check
+
+# Verify release with custom timeout
+./scripts/check-deploy.sh --version v1.0.0 --timeout 60
+```
+
+### CI Integration
+The deployment check is automatically run in CI after build completion. It verifies:
+- ✓ Build artifacts (JAR, sources, javadoc)
+- ✓ CLI functionality and help output
+- ✓ Key generation capability
+- ✓ Server startup and API endpoints (in local environments)
+- ✓ Release artifact accessibility (for release checks)
+
+### Test Deployment Check
+```bash
+# Run tests for the deployment check script itself
+./scripts/test-check-deploy.sh
+```
+
 ## certificate.json Example
 ```json
 {
