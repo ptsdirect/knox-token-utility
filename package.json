@@ -27,7 +27,8 @@
     "syncpack:lint": "syncpack lint --config ./.syncpackrc.js",
     "syncpack:list": "syncpack list --config ./.syncpackrc.js",
     "generate:jwt": "node generateKnoxJWT.js",
-    "get:knox-token": "node getKnoxTokenFull.js"
+    "get:knox-token": "node getKnoxTokenFull.js",
+    "generate:access-token": "node generateKnoxAccessToken.js"
   },
   "devDependencies": {
     "@changesets/cli": "2.26.2",
@@ -57,6 +58,7 @@
   "dependencies": {
     "@redredgroup/samsungknox-api": "^1.6.1",
     "axios": "^1.12.1",
-    "dotenv": "^17.2.2"
+    "dotenv": "^17.2.2",
+    "jsonwebtoken": "^9.0.2"
   }
 }

@@ -158,6 +158,35 @@ java -jar target/pts-1.0.0-jar-with-dependencies.jar --help
 ```
 Representative modes: `sign-client-idp`, `sign-session`, `sign-access`, `export-public`, `encrypt`, `request-token`, `validate-token`, `enroll-device`.
 
+## Node.js Token Generation Scripts
+
+The repository includes Node.js scripts for generating Knox access tokens with comprehensive JWT handling:
+
+### Comprehensive Access Token Generator (Recommended)
+```bash
+npm run generate:access-token
+```
+Or with options:
+```bash
+node generateKnoxAccessToken.js --keys-file=keys.json --client-id=my-client --region=us
+```
+
+Features:
+- Complete JWT generation with all required claims (iss, aud, iat, exp, jti, clientIdentifier)
+- Auto-detects key type (EC/RSA) and uses appropriate algorithm (ES256/RS256)
+- Sends JWT to Samsung Knox API for access token
+- Generates signed access token JWT
+- Comprehensive error handling and logging
+- Regional endpoint support (us, eu, ap)
+
+See `KNOX_TOKEN_SCRIPT_README.md` for complete documentation.
+
+### Other Available Scripts
+```bash
+npm run generate:jwt          # Simple JWT generation (no API call)
+npm run get:knox-token        # Basic access token request
+```
+
 ## Device Operations (Scripts Overview)
 
 Three helper scripts are provided for Knox Guard device lifecycle flows. All require a valid access token (export `ACCESS_TOKEN`). Region auto-resolves from `KNOX_REGION` (`us` default) but can be overridden with `KNOX_API_BASE_URL`.

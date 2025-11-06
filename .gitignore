@@ -66,6 +66,14 @@ buildNumber.properties
 *.key
 private_key*
 public_key*
+keys.json
+keys-*.json
+
+# Knox token results
+knox-token-results.json
+knox_credentials.json
+jwt.txt
+public_key_base64.txt
 
 # Temporary files
 *.tmp
