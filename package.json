@@ -27,7 +27,8 @@
     "syncpack:lint": "syncpack lint --config ./.syncpackrc.js",
     "syncpack:list": "syncpack list --config ./.syncpackrc.js",
     "generate:jwt": "node generateKnoxJWT.js",
-    "get:knox-token": "node getKnoxTokenFull.js"
+    "get:knox-token": "node getKnoxTokenFull.js",
+    "generate:access-token": "node generateKnoxAccessToken.js"
   },
   "devDependencies": {
     "@changesets/cli": "2.26.2",
