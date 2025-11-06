@@ -83,33 +83,42 @@ function loadKeys(filePath) {
   }
 }
 
+// Key size threshold for algorithm detection (in base64 characters)
+// EC P-256 keys are ~150 chars, RSA 2048 keys are ~1700 chars
+const KEY_SIZE_THRESHOLD = 500;
+
 /**
  * Detect key type from private key PEM
  * @param {string} privateKey - PEM formatted private key
  * @returns {string} Algorithm to use ('ES256' for EC, 'RS256' for RSA)
+ * @throws {Error} If key type cannot be determined
  */
 function detectKeyAlgorithm(privateKey) {
-  if (privateKey.includes('BEGIN EC PRIVATE KEY') || privateKey.includes('BEGIN PRIVATE KEY')) {
-    // Check if it's actually EC by looking at the key size
-    // EC P-256 keys are much smaller than RSA keys
-    const keyContent = privateKey
-      .replace(/-----BEGIN [A-Z ]+-----/, '')
-      .replace(/-----END [A-Z ]+-----/, '')
-      .replace(/[\n\r]/g, '')
-      .trim();
-    
-    // RSA 2048 keys are ~1700 chars in base64, EC P-256 keys are ~150 chars
-    if (keyContent.length < 500) {
+  const keyContent = privateKey
+    .replace(/-----BEGIN [A-Z ]+-----/, '')
+    .replace(/-----END [A-Z ]+-----/, '')
+    .replace(/[\n\r]/g, '')
+    .trim();
+  
+  // RSA 2048 keys are ~1700 chars in base64, EC P-256 keys are ~150 chars
+  if (keyContent.length < KEY_SIZE_THRESHOLD) {
+    // Short key - likely EC P-256
+    if (privateKey.includes('BEGIN EC PRIVATE KEY') || privateKey.includes('BEGIN PRIVATE KEY')) {
       return 'ES256';
+    }
+  } else {
+    // Long key - likely RSA
+    if (privateKey.includes('BEGIN RSA PRIVATE KEY') || privateKey.includes('BEGIN PRIVATE KEY')) {
+      return 'RS256';
     }
   }
   
-  if (privateKey.includes('BEGIN RSA PRIVATE KEY') || privateKey.includes('BEGIN PRIVATE KEY')) {
-    return 'RS256';
-  }
-  
-  // Default to ES256 as that's what Knox typically uses
-  return 'ES256';
+  // If we can't determine the key type, throw an error
+  throw new Error(
+    `Unable to detect key algorithm. Key size: ${keyContent.length} chars. ` +
+    `Expected EC P-256 (< ${KEY_SIZE_THRESHOLD} chars) or RSA 2048 (> ${KEY_SIZE_THRESHOLD} chars). ` +
+    `Please verify your key format.`
+  );
 }
 
 /**
